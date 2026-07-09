@@ -298,7 +298,7 @@
   async function cargarDatos() {
     try {
       // Uso de ruta relativa segura.
-      const respuesta = await fetch('./directorio.json');
+      const respuesta = await fetch('/directorio.json');
       if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
       
       dataGlobal = await respuesta.json();
