@@ -311,7 +311,8 @@
 
   async function cargarDatos() {
     try {
-      const respuesta = await fetch('/directorio.json');
+      // Ajuste crítico de la ruta a la estructura montada en GitHub
+      const respuesta = await fetch('/directorio/directorio.json');
       
       if (!respuesta.ok) {
           throw new Error("Base de datos no encontrada.");
@@ -323,7 +324,11 @@
       const sectores = [...new Set(directorioDatos.map(item => item.sector).filter(Boolean))].sort();
       sectores.forEach(sector => selectSector.insertAdjacentHTML('beforeend', `<option value="${sector}">${sector}</option>`));
 
-      const roles = [...new Set(directorioDatos.flatMap(item => item.roles || []))].sort();
+      // Lógica defensiva para extraer roles (incluso si vienen como string simple o no existen)
+      const roles = [...new Set(directorioDatos.flatMap(item => {
+          if (!item.roles) return [];
+          return Array.isArray(item.roles) ? item.roles : [item.roles];
+      }))].sort();
       roles.forEach(rol => selectRol.insertAdjacentHTML('beforeend', `<option value="${rol}">${rol}</option>`));
       
     } catch (error) {
@@ -331,7 +336,7 @@
       contenedorGrid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 40px; background: #fee2e2; border-radius: 8px; color: #991b1b;">
             <h3>Conexión con SharePoint pendiente</h3>
-            <p>El frontend está listo, pero no encuentra el archivo <strong>directorio.json</strong>.<br>Debes configurar el flujo de Power Automate para que extraiga los datos y los envíe a este repositorio.</p>
+            <p>El frontend está listo, pero no encuentra el archivo <strong>directorio.json</strong> en la ruta esperada.<br>Asegúrate de que Power Automate haya enviado los datos a GitHub.</p>
         </div>`;
     }
   }
@@ -355,9 +360,11 @@
         if (item.isExit) badgesHTML += '<span class="badge exit">🚀 Caso de Éxito</span>';
         if (item.isAlumni) badgesHTML += '<span class="badge alumni">🔄 Ciclo Completo</span>';
 
+        // Lógica defensiva para Mentores
+        let mentoresArray = Array.isArray(item.mentores) ? item.mentores : (item.mentores ? [item.mentores] : []);
         let mentoresHTML = '';
-        if (item.mentores && item.mentores.length > 0) {
-          mentoresHTML = `<div class="relacion-mentoring"><strong>Mentores asignados</strong>${item.mentores.join(', ')}</div>`;
+        if (mentoresArray.length > 0) {
+          mentoresHTML = `<div class="relacion-mentoring"><strong>Mentores asignados</strong>${mentoresArray.join(', ')}</div>`;
         }
 
         card.innerHTML = `
@@ -369,14 +376,18 @@
           ${item.web ? `<a href="${item.web}" target="_blank" class="btn-web">Ver web</a>` : ''}
         `;
       } else {
+        // Lógica defensiva para Roles
+        let rolesArray = Array.isArray(item.roles) ? item.roles : (item.roles ? [item.roles] : []);
         let rolesHTML = '';
-        if (item.roles && item.roles.length > 0) {
-          rolesHTML = '<div class="tags-roles">' + item.roles.map(rol => `<span class="tag-rol">${rol}</span>`).join('') + '</div>';
+        if (rolesArray.length > 0) {
+          rolesHTML = '<div class="tags-roles">' + rolesArray.map(rol => `<span class="tag-rol">${rol}</span>`).join('') + '</div>';
         }
 
+        // Lógica defensiva para Mentorizados
+        let mentorizadosArray = Array.isArray(item.proyectosMentorizados) ? item.proyectosMentorizados : (item.proyectosMentorizados ? [item.proyectosMentorizados] : []);
         let mentorizaHTML = '';
-        if (item.proyectosMentorizados && item.proyectosMentorizados.length > 0) {
-          mentorizaHTML = `<div class="relacion-mentoring"><strong>Mentoriza a</strong>${item.proyectosMentorizados.join(', ')}</div>`;
+        if (mentorizadosArray.length > 0) {
+          mentorizaHTML = `<div class="relacion-mentoring"><strong>Mentoriza a</strong>${mentorizadosArray.join(', ')}</div>`;
         }
 
         card.innerHTML = `
@@ -405,7 +416,10 @@
       const matchTexto = strMatch.includes(texto);
       
       const matchSector = sector === 'todos' || item.sector === sector;
-      const matchRol = rol === 'todos' || (item.roles && item.roles.includes(rol));
+      
+      // Filtro de rol adaptado para arrays normalizados
+      const itemRoles = Array.isArray(item.roles) ? item.roles : (item.roles ? [item.roles] : []);
+      const matchRol = rol === 'todos' || itemRoles.includes(rol);
 
       return matchTexto && matchSector && matchRol;
     });
