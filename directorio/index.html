@@ -312,7 +312,7 @@
   async function cargarDatos() {
     try {
       // Ajuste crítico de la ruta a la estructura montada en GitHub
-      const respuesta = await fetch('/directorio/directorio.json');
+      const respuesta = await fetch('/directorio.json');
       
       if (!respuesta.ok) {
           throw new Error("Base de datos no encontrada.");
