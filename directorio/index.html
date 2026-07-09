@@ -271,7 +271,7 @@
 
   async function cargarDatos() {
     try {
-      // Dirección del JSON relativa a la misma carpeta donde reside este index
+      // Dirección del JSON en la raíz de la carpeta del index
       const respuesta = await fetch('/directorio.json');
       if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
       
@@ -291,18 +291,29 @@
       const dbSectores = new Set();
       const dbRoles = new Set();
 
-      // Extraer roles globales antes de la agrupación para poblar los filtros
+      const rawEmpresasSocias = data.filter(d => d.tipo === 'empresa_socia');
+      const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
+      const rawEmpresasPremiadas = data.filter(d => d.tipo === 'empresa_premiada');
+      const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
+
+      // Cruce de datos relacional para marcar insignias Alumni dinámicamente
+      rawPersonasSocias.forEach(socio => {
+          const coincideConEmprendedor = rawPersonasEmprendedoras.some(emprendedor => 
+              (emprendedor.nombre || '').toLowerCase().trim() === (socio.nombre || '').toLowerCase().trim() &&
+              (emprendedor.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
+          );
+          if (coincideConEmprendedor) {
+              socio.isAlumni = true;
+          }
+      });
+
+      // Extraer roles globales para los filtros
       data.forEach(item => {
           if (item.roles) {
               const rolesArray = Array.isArray(item.roles) ? item.roles : [item.roles];
               rolesArray.forEach(r => { if(r) dbRoles.add(r.trim()); });
           }
       });
-
-      const rawEmpresasSocias = data.filter(d => d.tipo === 'empresa_socia');
-      const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
-      const rawEmpresasPremiadas = data.filter(d => d.tipo === 'empresa_premiada');
-      const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
 
       // Agrupar Empresas Socias con sus miembros vinculados
       entidadesSocios = rawEmpresasSocias.map(emp => {
@@ -329,7 +340,7 @@
               nombre: pf.nombre,
               sector: 'Socio Profesional',
               foto: pf.foto,
-              web: pf.linkedin, // Reutiliza campo para navegación homogénea
+              web: pf.linkedin, 
               miembros: [pf]
           });
       });
@@ -362,18 +373,15 @@
       const rol = selectRol.value;
 
       const filtrarEntidad = (entidad) => {
-          // Filtro por Sector
           const matchSector = sector === 'todos' || entidad.sector === sector;
           if (!matchSector) return false;
 
-          // Filtro por Rol interno de los miembros
           const matchRol = rol === 'todos' || entidad.miembros.some(m => {
               const itemRoles = Array.isArray(m.roles) ? m.roles : (m.roles ? [m.roles] : []);
               return itemRoles.includes(rol);
           });
           if (!matchRol) return false;
 
-          // Filtro por entrada de texto libre
           if (texto === '') return true;
           
           let stringBusqueda = `${entidad.nombre} ${entidad.sector || ''} ${entidad.descripcion || ''}`.toLowerCase();
@@ -391,7 +399,7 @@
   function pintarGrid(contenedor, datos, tipoEntidad) {
       contenedor.innerHTML = '';
       if (datos.length === 0) {
-          contenedor.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No se encontraron registros en esta sección bajo estos filtros.</p>';
+          contenedor.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No se encontraron registros que coincidan.</p>';
           return;
       }
 
@@ -411,7 +419,6 @@
               descripcionHtml = `<p class="entidad-descripcion" title="${entidad.descripcion}">${entidad.descripcion}</p>`;
           }
           
-          // Renderizar los miembros humanos empotrados en la ficha corporativa
           let htmlMiembros = '<div class="miembros-list">';
           entidad.miembros.forEach(m => {
               let badgesHTML = '';
@@ -435,7 +442,7 @@
 
               const itemMiembro = `
                   <div class="miembro-item">
-                      ${htmlFotoPersona}
+                      ${entidad.is_empresa ? htmlFotoPersona : ''}
                       <div class="miembro-datos">
                           <h4 class="miembro-nombre">${m.nombre}</h4>
                           <p class="miembro-cargo">${m.cargo || 'Miembro'}</p>
