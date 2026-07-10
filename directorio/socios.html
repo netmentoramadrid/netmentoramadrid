@@ -5,50 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socios - Netmentora Madrid</title>
     <style>
-        :root { --dir-primary: #002b5c; --dir-accent: #00B159; --dir-bg-card: #ffffff; --dir-text-dark: #1e293b; --dir-text-muted: #64748b; --dir-border-light: #e2e8f0; }
-        .directorio-contenedor { max-width: 1280px; margin: 40px auto; padding: 0 20px; font-family: system-ui, -apple-system, sans-serif; color: var(--dir-text-dark); }
-        .panel-controles { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light); }
-        .panel-controles input, .panel-controles select { padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; flex: 1; min-width: 180px; outline: none; box-sizing: border-box; }
-        .panel-controles input:focus, .panel-controles select:focus { border-color: var(--dir-primary); }
-        .section-title { font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light); font-weight: bold; }
-        .grid-entidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
-        
-        .card-entidad { position: relative; background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-        .card-entidad:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        
-        /* Ribetes Múltiples */
-        .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 110px; height: 110px; overflow: hidden; z-index: 10; pointer-events: none;}
-        .ribbon { position: absolute; top: 22px; right: -28px; padding: 4px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: 0.5px; text-align: center; color: white;}
-        .ribbon-accent { background: var(--dir-accent); }
-        .ribbon-purple { background: #7c3aed; } /* Color para Fundadores */
+        :root {
+            --dir-primary: #002b5c; 
+            --dir-accent: #00B159; 
+            --dir-bg-card: #ffffff;
+            --dir-text-dark: #1e293b;
+            --dir-text-muted: #64748b;
+            --dir-border-light: #e2e8f0;
+        }
 
-        .card-header { padding: 25px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 20px; align-items: center; position: relative; }
-        .card-header.is-socia { border-top: 4px solid var(--dir-primary); }
-        .card-header.is-fisica { border-top: 4px solid #94a3b8; }
-        .entidad-logo { width: 90px; height: 90px; border-radius: 8px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0; }
+        .directorio-contenedor {
+            max-width: 1280px; margin: 40px auto; padding: 0 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--dir-text-dark);
+        }
+
+        .panel-controles {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02); margin-bottom: 30px;
+            display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light);
+            align-items: center;
+        }
+        .panel-controles input, .panel-controles select {
+            padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 15px; flex: 1; min-width: 180px; outline: none;
+            box-sizing: border-box; background-color: #fff; color: var(--dir-text-dark);
+        }
+        .panel-controles input:focus, .panel-controles select:focus {
+            border-color: var(--dir-primary); box-shadow: 0 0 0 3px rgba(0,43,92,0.1);
+        }
+
+        .section-title {
+            font-size: 2rem; color: var(--dir-primary); margin: 40px 0 20px 0;
+            padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light);
+            font-weight: 800; tracking-tight: -0.025em;
+        }
+
+        .grid-entidades {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px;
+        }
+
+        .card-entidad {
+            position: relative; background: var(--dir-bg-card); border-radius: 16px; border: 1px solid var(--dir-border-light);
+            box-shadow: 0 4px 12px rgba(15,23,42,0.03); display: flex; flex-direction: column; overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-entidad:hover {
+            transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
+        }
+        
+        .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 120px; height: 120px; overflow: hidden; z-index: 10; pointer-events: none;}
+        .ribbon { position: absolute; top: 25px; right: -30px; padding: 5px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white;}
+        .ribbon-accent { background: var(--dir-accent); }
+        .ribbon-founder { background: #7c3aed; } 
+
+        .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 20px; align-items: center; position: relative; }
+        .card-header.is-socia { border-top: 5px solid var(--dir-primary); }
+        .card-header.is-fisica { border-top: 5px solid #94a3b8; }
+
+        .entidad-logo { width: 90px; height: 90px; border-radius: 12px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 8px; flex-shrink: 0; }
         .entidad-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dir-border-light); flex-shrink: 0; background: white; }
         .entidad-info { flex-grow: 1; }
-        .entidad-nombre { margin: 0 0 4px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
-        .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: block; margin-bottom: 2px; }
-        .entidad-fecha { font-size: 0.75rem; color: var(--dir-primary); font-weight: bold; display: block; margin-top: 4px;}
+        .entidad-nombre { margin: 0 0 4px 0; font-size: 1.35rem; line-height: 1.2; font-weight: 700; color: #0f172a; }
+        .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: block; }
+        .entidad-fecha { font-size: 0.75rem; color: var(--dir-primary); font-weight: 700; display: block; margin-top: 4px; }
 
-        .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
-        .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light); }
+        .miembros-list { padding: 20px; flex-grow: 1; background: #fafafa; }
+        .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--dir-border-light); }
         .miembro-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        
         .miembro-foto { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white; }
         .miembro-datos { flex-grow: 1; }
-        .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: var(--dir-text-dark);}
-        .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 6px 0; }
+        .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: #0f172a;}
+        .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 6px 0; line-height: 1.3; }
         
         .roles-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px;}
-        .badge-rol { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: #475569; font-weight: 500;}
+        .badge-rol { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; background: #e2e8f0; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em;}
         .badge-alumni { background: #fef08a; color: #854d0e; }
         
-        /* Enlaces interactivos Modales */
-        .link-modal { cursor: pointer; color: #0284c7; text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s; }
-        .link-modal:hover { color: #0369a1; }
+        .link-interactive-modal { position: relative; display: inline-block; color: #0284c7; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; cursor: pointer; }
+        .link-interactive-modal:hover { color: #0369a1; }
         
-        .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+        .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
         .linkedin-link:hover { text-decoration: underline; }
         .card-footer { padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end; }
         .btn-web { font-size: 0.85rem; font-weight: 600; color: var(--dir-primary); text-decoration: none; }
@@ -56,14 +94,10 @@
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
 
-        /* Estilos del Modal (Popup) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: transparent; width: 100%; max-width: 450px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        .modal-close { position: absolute; top: -15px; right: -15px; background: white; border: 2px solid var(--dir-border-light); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; color: var(--dir-text-dark); transition: background 0.2s;}
-        .modal-close:hover { background: #f1f5f9; }
-        #modal-body .card-entidad { margin: 0; pointer-events: auto; }
+        .popover-container { position: fixed; z-index: 99999; background: white; border-radius: 16px; border: 1px solid var(--dir-border-light); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); width: 360px; pointer-events: none; opacity: 0; transform: scale(0.95); transition: opacity 0.15s ease, transform 0.15s ease; padding: 0; overflow: hidden; }
+        .popover-container.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+        .popover-close-btn { position: absolute; top: 10px; right: 10px; background: white; border: 1px solid var(--dir-border-light); width: 28px; height: 26px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--dir-text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .popover-close-btn:hover { background: #f1f5f9; }
     </style>
 </head>
 <body>
@@ -78,33 +112,39 @@
             <option value="empresas">Empresas Socias</option>
             <option value="personas">Personas Físicas</option>
         </select>
+        <select id="filtro-orden">
+            <option value="predeterminado">Orden: Empresas primero</option>
+            <option value="alfabetico">Orden: Alfabético general</option>
+            <option value="adhesion">Orden: Fecha de adhesión</option>
+        </select>
         <select id="filtro-sector"><option value="todos">Sectores: Todos</option></select>
         <select id="filtro-rol"><option value="todos">Roles internos: Todos</option></select>
     </div>
-    <div id="loading" class="estado-carga">Cargando socios...</div>
+    
+    <div id="loading" class="estado-carga">Cargando Red de Socios...</div>
+
     <div id="contenido-directorio" class="hidden">
         <h2 class="section-title">Socios</h2>
         <div id="grid-socios" class="grid-entidades"></div>
     </div>
 </main>
 
-<!-- El contenedor del Popup Modal -->
-<div id="modal-directorio" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close" onclick="cerrarModal()">✕</button>
-        <div id="modal-body"></div>
-    </div>
-</div>
+<div id="popover-ecosistema" class="popover-container"></div>
 
 <!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
 
 <script>
-  let datosGlobalesBrutos = []; // Guarda el JSON puro para cruces en el Modal
+  let datosGlobalesBrutos = []; 
   let entidadesSocios = []; 
   let personasPlanas = [];  
   
+  const popover = document.getElementById('popover-ecosistema');
+  let popoverLocked = false;
+  let popoverActiveTarget = null;
+
   const inputBuscador = document.getElementById('buscador-texto');
   const selectTipo = document.getElementById('filtro-tipo');
+  const selectOrden = document.getElementById('filtro-orden');
   const selectSector = document.getElementById('filtro-sector');
   const selectRol = document.getElementById('filtro-rol');
   const contenedorSocios = document.getElementById('grid-socios');
@@ -116,24 +156,30 @@
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
-  // Motor de Jerarquía Directiva
+  // 1. Diccionario de 7 Niveles para Jerarquía Corporativa Interna
   function obtenerPesoCargoDirectivo(cargoStr) {
       if (!cargoStr) return 99;
       const c = cargoStr.toLowerCase();
-      const topTier = ['ceo', 'director general', 'general manager', 'consejero delegado', 'presidente', 'country manager', 'founder', 'fundador', 'co-founder', 'cofounder', 'board member', 'socio'];
-      for (let i = 0; i < topTier.length; i++) { if (c.includes(topTier[i])) return 1; }
-      if (c.includes('director') || c.includes('head') || c.includes('chief') || c.includes('vp')) return 2;
-      if (c.includes('manager') || c.includes('responsable') || c.includes('lead')) return 3;
+      
+      if (c.includes('presidente') || c.includes('presidenta')) return 1;
+      if (c.includes('ceo') || c.includes('director general') || c.includes('general manager') || c.includes('consejero delegado')) return 2;
+      if (c.includes('socio') || c.includes('socia') || c.includes('partner') || c.includes('founder') || c.includes('fundador') || c.includes('fundadora') || c.includes('global')) return 3;
+      if (c.includes('country manager') || c.includes('group')) return 4;
+      if (c.includes('vp') || c.includes('vice president') || c.includes('vicepresidente') || c.includes('cfo') || c.includes('cto') || c.includes('coo') || c.includes('cio')) return 5;
+      if (c.includes('director') || c.includes('directora') || c.includes('head') || c.includes('chief')) return 6;
+      if (c.includes('manager') || c.includes('responsable') || c.includes('lead')) return 7;
+      
       return 10;
   }
 
-  // Motor Lexico para Cargos Internos (Junta y Grupos)
-  function obtenerPesoCargo(cargoStr, filtroActivo) {
+  // 2. Diccionario de Ordenamiento para Cargos en Grupos y Junta (Filtrado Individual)
+  function obtenerPesoCargoInterno(cargoStr, filtroActivo) {
       if (!cargoStr) return 99;
       const fragmentos = cargoStr.split('|').map(s => s.trim().toLowerCase());
       const filtro = filtroActivo.toLowerCase();
       let fragRelevante = fragmentos.find(f => f.includes(filtro) || filtro.split(' ').some(w => w.length > 4 && f.includes(w)));
       if (!fragRelevante) fragRelevante = cargoStr.toLowerCase();
+      
       if (fragRelevante.includes('president')) return 1;
       if (fragRelevante.includes('vicepresident')) return 2;
       if (fragRelevante.includes('tesorer') || fragRelevante.includes('secretari')) return 3;
@@ -151,7 +197,7 @@
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
-      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar la base de datos de socios.</p>`;
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center; padding:25px;">Error al cargar la base de datos central de socios.</p>`;
     }
   }
 
@@ -161,12 +207,11 @@
 
       const rawEmpresasSocias = data.filter(d => d.tipo === 'empresa_socia');
       const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
-      const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
+      const rawEmpresasPremiadas = data.filter(d => d.tipo === 'empresa_premiada');
 
       rawPersonasSocias.forEach(socio => {
-          socio.isAlumni = rawPersonasEmprendedoras.some(emp => 
-              (emp.nombre || '').toLowerCase().trim() === (socio.nombre || '').toLowerCase().trim() &&
-              (emp.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
+          socio.isAlumni = rawEmpresasPremiadas.some(emp => 
+              (emp.nombre || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
           );
       });
 
@@ -224,6 +269,7 @@
   function renderizarInterfaces() {
       const texto = inputBuscador.value.toLowerCase().trim();
       const tipo = selectTipo.value;
+      const orden = selectOrden.value;
       const sector = selectSector.value;
       const rol = selectRol.value;
 
@@ -242,8 +288,8 @@
           });
 
           personasFiltradas.sort((a, b) => {
-              const pesoA = obtenerPesoCargo(a.cargoInterno, rol);
-              const pesoB = obtenerPesoCargo(b.cargoInterno, rol);
+              const pesoA = obtenerPesoCargoInterno(a.cargoInterno, rol);
+              const pesoB = obtenerPesoCargoInterno(b.cargoInterno, rol);
               if (pesoA !== pesoB) return pesoA - pesoB;
               return (a.nombre || '').localeCompare(b.nombre || '');
           });
@@ -268,14 +314,29 @@
               }
           });
 
-          entidadesFiltradas.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+          if (orden === 'alfabetico') {
+              entidadesFiltradas.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+          } else if (orden === 'adhesion') {
+              entidadesFiltradas.sort((a, b) => {
+                  const desdeA = parseInt(a.socioDesde) || 9999;
+                  const desdeB = parseInt(b.socioDesde) || 9999;
+                  if(desdeA !== desdeB) return desdeA - desdeB;
+                  return (a.nombre || '').localeCompare(b.nombre || '');
+              });
+          } else {
+              entidadesFiltradas.sort((a, b) => {
+                  if (a.is_empresa !== b.is_empresa) return b.is_empresa - a.is_empresa;
+                  return (a.nombre || '').localeCompare(b.nombre || '');
+              });
+          }
+
           pintarGridAgrupado(entidadesFiltradas);
       }
   }
 
   function pintarGridAgrupado(datos) {
       contenedorSocios.innerHTML = '';
-      if (datos.length === 0) { contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay socios registrados bajo estos filtros.</p>'; return; }
+      if (datos.length === 0) { contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay socios registrados.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -293,18 +354,25 @@
           const claseHeader = entidad.is_empresa ? 'is-socia' : 'is-fisica';
           const imagenHtml = entidad.is_empresa 
               ? `<img src="${entidad.logo}" class="entidad-logo" onerror="this.style.display='none'">`
-              : `<img src="${entidad.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
+              : `<img src="${entidad.foto ? entidad.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp'}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
 
           const sectorHtml = entidad.sector ? `<span class="entidad-sector">${entidad.sector}</span>` : '';
-          const socioDesdeHtml = entidad.socioDesde ? `<span class="entidad-fecha">Socio desde ${entidad.socioDesde}</span>` : '';
+          const socioDesdeHtml = entidad.socioDesde ? `<span class="entidad-fecha">Socio desde ${entidad.socioDesde}</span>` : `<span class="entidad-fecha">Socio desde </span>`;
 
           let htmlMiembros = '<div class="miembros-list">';
           
-          // ORDENAMIENTO INTERNO DE LOS MIEMBROS POR CARGO CORPORATIVO
+          // REGLAS ESTRICTAS DE ORDEN CORPORATIVO
           const miembrosOrdenados = [...entidad.miembros].sort((a,b) => {
+              // Regla 1: En empresas Alumni, el emprendedor premiado asume el mando supremo
+              if (entidad.isAlumniEntity) {
+                  if (a.isAlumni !== b.isAlumni) return a.isAlumni ? -1 : 1;
+              }
+              // Regla 2: El Diccionario de Ponderación Directiva (7 Niveles)
               const pesoA = obtenerPesoCargoDirectivo(a.cargo);
               const pesoB = obtenerPesoCargoDirectivo(b.cargo);
-              if (pesoA !== pesoB) return pesoA - pesoB;
+              if(pesoA !== pesoB) return pesoA - pesoB;
+              
+              // Regla 3: Orden Alfabético para el resto de mortales
               return (a.nombre||'').localeCompare(b.nombre||'');
           });
 
@@ -314,13 +382,14 @@
               extraerArray(m.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
               const mentorizados = extraerArray(m.proyectosMentorizados);
-              // Inyección del enlace para abrir Modal
-              const mentorizaLinks = mentorizados.map(p => `<span class="link-modal" onclick="abrirModalProyecto('${p.replace(/'/g, "\\'")}')">${p}</span>`).join(', ');
-              const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${mentorizaLinks}</div>` : '';
+              let mentorizaHTML = '';
+              if (mentorizados.length > 0) {
+                  const links = mentorizados.map(p => `<span class="link-interactive-modal" data-type="proyecto" data-name="${p.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">${p}</span>`).join(', ');
+                  mentorizaHTML = `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${links}</div>`;
+              }
 
-              const htmlFotoPersona = (entidad.is_empresa && m.foto) 
-                ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
-                : (entidad.is_empresa ? `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" class="miembro-foto">` : '');
+              const fotoUrl = m.foto ? m.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
+              const htmlFotoPersona = entidad.is_empresa ? `<img src="${fotoUrl}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` : '';
               
               const htmlCargoInterno = m.cargoInterno ? `<p style="font-size:0.8rem; color:#00B159; font-weight:600; margin:0 0 2px 0;">${m.cargoInterno}</p>` : '';
               const htmlCargo = m.cargo ? `<p class="miembro-cargo" style="margin:0 0 6px 0;">${m.cargo}</p>` : '';
@@ -363,7 +432,7 @@
 
   function pintarGridPersonas(datosPersonas) {
       contenedorSocios.innerHTML = '';
-      if (datosPersonas.length === 0) { contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay directivos con ese rol.</p>'; return; }
+      if (datosPersonas.length === 0) { contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay directivos registrados.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -372,7 +441,8 @@
           card.className = 'card-entidad';
           
           const ribbonHtml = p.isAlumni ? `<div class="ribbon-wrapper"><div class="ribbon ribbon-accent">Empresa Premiada</div></div>` : '';
-          const imagenHtml = `<img src="${p.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
+          const fotoUrl = p.foto ? p.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
+          const imagenHtml = `<img src="${fotoUrl}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
           const htmlCargoInterno = p.cargoInterno ? `<p style="font-size:0.9rem; color:#00B159; font-weight:700; margin:4px 0 0 0;">${p.cargoInterno}</p>` : '';
           
           let htmlEmpresa = '';
@@ -396,8 +466,11 @@
           extraerArray(p.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
           const mentorizados = extraerArray(p.proyectosMentorizados);
-          const mentorizaLinks = mentorizados.map(proj => `<span class="link-modal" onclick="abrirModalProyecto('${proj.replace(/'/g, "\\'")}')">${proj}</span>`).join(', ');
-          const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${mentorizaLinks}</div>` : '';
+          let mentorizaHTML = '';
+          if (mentorizados.length > 0) {
+              const links = mentorizados.map(proj => `<span class="link-interactive-modal" data-type="proyecto" data-name="${proj.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">${proj}</span>`).join(', ');
+              mentorizaHTML = `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${links}</div>`;
+          }
           
           const htmlLinkedin = p.linkedin ? `<div style="margin-top:10px;"><a href="${p.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a></div>` : '';
           const footerHTML = p.empresaWeb ? `<div class="card-footer"><a href="${p.empresaWeb}" target="_blank" class="btn-web">Web de la empresa ↗</a></div>` : '';
@@ -424,16 +497,58 @@
       contenedorSocios.appendChild(fragment);
   }
 
-  // =========================================
-  // SISTEMA DE VENTANAS EMERGENTES (MODAL)
-  // =========================================
-  const modalOverlay = document.getElementById('modal-directorio');
-  const modalBody = document.getElementById('modal-body');
+  function posicionarPopover(e) {
+      const rect = e.target.getBoundingClientRect();
+      const popoverWidth = 360;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (popoverWidth / 2);
+      let top = rect.top + window.scrollY - 10;
+      
+      if (left < 10) left = 10;
+      if (left + popoverWidth > window.innerWidth) left = window.innerWidth - popoverWidth - 10;
+      
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+      popover.style.transform = `translateY(-100%) scale(1)`;
+  }
 
-  function cerrarModal() { modalOverlay.classList.remove('active'); }
-  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) cerrarModal(); });
+  function handleLinkHover(e) {
+      if (popoverLocked) return;
+      popoverActiveTarget = e.target;
+      const nombreProyecto = e.target.getAttribute('data-name');
+      construirContenidoPopover(nombreProyecto);
+      posicionarPopover(e);
+      popover.classList.add('active');
+  }
 
-  function abrirModalProyecto(nombreProyectoRaw) {
+  function handleLinkLeave(e) {
+      if (popoverLocked) return;
+      popover.classList.remove('active');
+      popoverActiveTarget = null;
+  }
+
+  function handleLinkClick(e) {
+      e.stopPropagation();
+      popoverLocked = true;
+      popoverActiveTarget = e.target;
+      const nombreProyecto = e.target.getAttribute('data-name');
+      construirContenidoPopover(nombreProyecto, true);
+      posicionarPopover(e);
+      popover.classList.add('active');
+  }
+
+  function cerrarPopoverManual() {
+      popoverLocked = false;
+      popover.classList.remove('active');
+      popoverActiveTarget = null;
+  }
+
+  document.addEventListener('click', (e) => {
+      if (popoverLocked && !popover.contains(e.target) && e.target !== popoverActiveTarget) {
+          cerrarPopoverManual();
+      }
+  });
+
+  function construirContenidoPopover(nombreProyectoRaw, incluirBotonCerrar = false) {
       const nombre = nombreProyectoRaw.toLowerCase().trim();
       const rawPremiadas = datosGlobalesBrutos.filter(d => d.tipo === 'empresa_premiada');
       const rawEmprendedores = datosGlobalesBrutos.filter(d => d.tipo === 'emprendedor');
@@ -441,23 +556,20 @@
       const proyecto = rawPremiadas.find(p => (p.nombre||'').toLowerCase().trim() === nombre);
       
       if (!proyecto) {
-          modalBody.innerHTML = `<div style="padding:40px; background:white; border-radius:12px; text-align:center;">El proyecto no ha sido encontrado en la base de datos pública.</div>`;
-          modalOverlay.classList.add('active');
+          popover.innerHTML = `<div style="padding:20px; background:white; font-size:0.85rem; text-align:center;">Ficha del proyecto no disponible.</div>`;
           return;
       }
 
       const miembros = rawEmprendedores.filter(m => (m.empresaVinculada||'').toLowerCase().trim() === nombre);
-      
-      let htmlMiembros = '<div class="miembros-list" style="max-height:40vh; overflow-y:auto;">';
+      let htmlMiembros = '<div class="miembros-list" style="padding:15px; background:#f8fafc; max-height:180px; overflow-y:auto;">';
       miembros.forEach(m => {
-          const mFoto = m.foto ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` : `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" class="miembro-foto">`;
+          const fotoUrl = m.foto ? m.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
           htmlMiembros += `
-              <div class="miembro-item">
-                  ${mFoto}
+              <div class="miembro-item" style="margin-bottom:10px; padding-bottom:10px; gap:10px;">
+                  <img src="${fotoUrl}" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                   <div class="miembro-datos">
-                      <h4 class="miembro-nombre">${m.nombre}</h4>
-                      ${m.cargo ? `<p class="miembro-cargo">${m.cargo}</p>` : ''}
-                      ${m.linkedin ? `<a href="${m.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a>` : ''}
+                      <h4 class="miembro-nombre" style="font-size:0.9rem; margin:0 0 2px 0;">${m.nombre}</h4>
+                      ${m.cargo ? `<p class="miembro-cargo" style="font-size:0.75rem; margin:0;">${m.cargo}</p>` : ''}
                   </div>
               </div>
           `;
@@ -465,29 +577,28 @@
       htmlMiembros += '</div>';
 
       const yearStr = proyecto.fechaComite ? new Date(proyecto.fechaComite).getFullYear() : (proyecto.fechaComite||'').substring(0,4);
-      
-      modalBody.innerHTML = `
-          <article class="card-entidad" style="box-shadow:none;">
-              <div class="card-header" style="border-top:4px solid var(--dir-accent); flex-direction:column; align-items:flex-start; gap:10px;">
-                  <div style="display:flex; gap:20px; align-items:center; width:100%;">
-                      <img src="${proyecto.logo}" class="entidad-logo" onerror="this.style.display='none'">
-                      <div class="entidad-info">
-                          <h3 class="entidad-nombre">${proyecto.nombre}</h3>
-                          ${proyecto.sector ? `<span class="entidad-sector">${proyecto.sector}</span>` : ''}
-                          ${yearStr && yearStr !== 'NaN' ? `<span class="entidad-fecha" style="color:var(--dir-accent)">Premiado en ${yearStr}</span>` : ''}
-                      </div>
+      const closeBtn = incluirBotonCerrar ? `<button class="popover-close-btn" onclick="cerrarPopoverManual()">✕</button>` : '';
+
+      popover.innerHTML = `
+          ${closeBtn}
+          <article class="card-entidad" style="box-shadow:none; border:none; border-radius:0;">
+              <div class="card-header" style="border-top:4px solid var(--dir-accent); padding:15px; gap:12px;">
+                  <img src="${proyecto.logo}" style="width:55px; height:55px; object-fit:contain; border:1px solid var(--dir-border-light); border-radius:6px; background:white; padding:4px;" onerror="this.style.display='none'">
+                  <div class="entidad-info">
+                      <h3 class="entidad-nombre" style="font-size:1.05rem; margin:0 0 2px 0;">${proyecto.nombre}</h3>
+                      ${proyecto.sector ? `<span class="entidad-sector" style="font-size:0.7rem; color:var(--dir-text-muted);">${proyecto.sector}</span>` : ''}
+                      ${yearStr && yearStr !== 'NaN' ? `<span style="font-size:0.7rem; color:var(--dir-accent); font-weight:bold; display:block; margin-top:2px;">Premiado en ${yearStr}</span>` : ''}
                   </div>
-                  ${proyecto.descripcion ? `<p class="entidad-descripcion" style="margin:5px 0 0 0; font-size:0.85rem;">${proyecto.descripcion}</p>` : ''}
               </div>
+              <div style="padding:10px 15px; font-size:0.8rem; color:var(--dir-text-muted); line-height:1.4; max-height:80px; overflow-y:auto; background:white; border-bottom:1px solid var(--dir-border-light);">${proyecto.descripcion}</div>
               ${htmlMiembros}
-              ${proyecto.web ? `<div class="card-footer"><a href="${proyecto.web}" target="_blank" class="btn-web" style="color:var(--dir-accent)">Visitar web del proyecto ↗</a></div>` : ''}
           </article>
       `;
-      modalOverlay.classList.add('active');
   }
 
   inputBuscador.addEventListener('input', renderizarInterfaces);
   selectTipo.addEventListener('change', renderizarInterfaces);
+  selectOrden.addEventListener('change', renderizarInterfaces);
   selectSector.addEventListener('change', renderizarInterfaces);
   selectRol.addEventListener('change', renderizarInterfaces);
 
