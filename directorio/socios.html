@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Red de Socios - Netmentora Madrid</title>
     <style>
+        /* =========================================================
+           CSS EXCLUSIVO DEL DIRECTORIO (No rompe tu WordPress)
+           ========================================================= */
         :root {
             --dir-primary: #002b5c; 
             --dir-accent: #00B159; 
@@ -61,19 +64,16 @@
         .card-header.is-socia { border-top: 4px solid var(--dir-primary); }
         .card-header.is-fisica { border-top: 4px solid #94a3b8; }
 
-        /* Logos con mayor presencia visual */
         .entidad-logo {
             width: 90px; height: 90px; border-radius: 8px; object-fit: contain;
             background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0;
         }
         .entidad-avatar {
             width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-            border: 2px solid var(--dir-border-light); flex-shrink: 0;
+            border: 2px solid var(--dir-border-light); flex-shrink: 0; background: white;
         }
         .entidad-info { flex-grow: 1; }
         .entidad-nombre { margin: 0 0 4px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
-        
-        /* Sector suavizado y con menor presencia */
         .entidad-sector {
             font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500;
             display: inline-block; margin-top: 2px;
@@ -86,7 +86,6 @@
         }
         .miembro-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         
-        /* Fotos de los socios más grandes */
         .miembro-foto { 
             width: 60px; height: 60px; border-radius: 50%; object-fit: cover; 
             border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white;
@@ -114,9 +113,45 @@
 </head>
 <body>
 
+<header class="banner">
+  <div class="header-left">
+          <button class="open-main-menu" type="button">
+        <span class="bars">
+          <span class="bar bg-re-blue"></span>
+          <span class="bar bg-re-yellow"></span>
+          <span class="bar bg-re-red"></span>
+        </span>
+                  <span class="text header-left-title">Descubre Netmentora Madrid</span>
+              </button>
+                    <a href="https://www.netmentora.org" class="fede-link hide-on-mobile">Sitio&nbsp;de&nbsp;la&nbsp;federación</a>
+      </div>
+
+  <div class="header-image">
+    <a href="https://www.netmentora.org/madrid/" rel="home">
+              <img src="https://www.netmentora.org/madrid/wp-content/uploads/sites/66/2026/05/logo_madrid_horizontal_quadri-scaled.png" alt="Netmentora Madrid">
+          </a>
+  </div>
+
+  <div class="header-right">
+    <div class="search-icon item">
+      <button type="button" class="toggle-search"><svg class="icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.52834 1.33799C10.9415 1.33799 13.7187 4.11522 13.7187 7.52843C13.7187 10.9416 10.9415 13.7189 7.52834 13.7189C4.11516 13.7189 1.33797 10.9416 1.33797 7.52843C1.33797 4.11522 4.11516 1.33799 7.52834 1.33799ZM7.52834 15.0569C9.36359 15.0569 11.0459 14.3946 12.3535 13.2996L16.858 17.8042C16.9887 17.9349 17.16 18 17.3308 18C17.5021 18 17.6733 17.9349 17.804 17.8042C18.0653 17.5429 18.0653 17.1196 17.804 16.8582L13.2995 12.3537C14.3948 11.046 15.0567 9.36371 15.0567 7.52843C15.0567 3.37709 11.6796 0 7.52834 0C3.37705 0 0 3.37709 0 7.52843C0 11.6793 3.37705 15.0569 7.52834 15.0569Z" fill="currentColor" stroke-width="0"></path>
+</svg></button>
+    </div>
+        <nav class="header-end-menu item hide-on-mobile">
+              <ul>
+        <li class=" menu-item">
+                                            <a class="btn btn-sm btn-re-" type="button" href="https://www.netmentora.org/madrid/proceso-de-seleccion/">
+                    Proceso de selección
+                </a>
+        </li>
+</ul>          </nav>  
+  </div>
+</header>
+
 <main class="directorio-contenedor">
     <div class="panel-controles">
-        <input type="text" id="buscador-texto" placeholder="Buscar socio, empresa, cargo o comisión...">
+        <input type="text" id="buscador-texto" placeholder="Buscar socio, empresa, cargo o rol...">
         <select id="filtro-sector"><option value="todos">Sectores: Todos</option></select>
         <select id="filtro-rol"><option value="todos">Roles internos: Todos</option></select>
     </div>
@@ -129,14 +164,92 @@
     </div>
 </main>
 
+<div class="pre-footer">
+      <div class="pre-footer_menu">
+      <div class="menu-pre-footer-container"><ul id="menu-pre-footer" class="nav menu"><li id="menu-item-6356" class="red menu-item menu-item-type-post_type menu-item-object-page menu-item-6356"><a href="https://www.netmentora.org/madrid/testimonios-2/">La Red</a></li>
+<li id="menu-item-6354" class="yellow menu-item menu-item-type-post_type menu-item-object-page menu-item-6354"><a href="https://www.netmentora.org/madrid/empresario-2/">Empresario</a></li>
+<li id="menu-item-6355" class="blue menu-item menu-item-type-post_type menu-item-object-page menu-item-6355"><a href="https://www.netmentora.org/madrid/emprendedor-2/">Emprendedor</a></li>
+</ul></div>
+    </div>
+ </div>
+
+<footer class="content-info">
+    <div class="footer-container">
+      <div class="logos">
+                  <img src="https://www.netmentora.org/madrid/wp-content/uploads/sites/66/2026/05/logo_madrid_horizontal_quadri-scaled.png" alt="Netmentora Madrid">
+              </div>
+      <div class="footer-inner flex-nowrap">
+        <div class="social-menu pr-2 items-center col-lg-auto">
+                      <div class="menu-icones-sociales-container"><ul id="menu-icones-sociales-1" class="menu"><li class="twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-278"><a href="https://twitter.com/netmentoramad">Twitter</a></li>
+<li class="linkedin menu-item menu-item-type-custom menu-item-object-custom menu-item-279"><a href="https://www.linkedin.com/company/netmentora-madrid/">Linkedin</a></li>
+</ul></div>
+                  </div>
+        <nav class="header-end-menu">
+                      <ul>
+        <li class=" menu-item">
+                                            <a class="btn btn-sm btn-re-" type="button" href="https://www.netmentora.org/madrid/proceso-de-seleccion/">
+                    Proceso de selección
+                </a>
+        </li>
+</ul>                  </nav>
+      </div>
+    </div>
+    
+    <div class="footer-container">
+      <div class="footer-menu">
+              </div>
+    </div>
+
+  <div class="footer-container copyright-section">
+                <div class="menu-footer-menu-secondary-container"><ul id="menu-footer-menu-secondary" class="menu"><li id="menu-item-8884" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8884"><a href="https://www.netmentora.org/es/informacion-legal/">Información legal</a></li>
+<li id="menu-item-8885" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8885"><a href="https://www.netmentora.org/es/proteccion-de-datos-personales/">Protección de datos personales</a></li>
+</ul></div>
+            <div class="copyright">
+        <span class="d-block pr-2">© Réseau Entreprendre  Tous droits réservés - 2022</span>
+      </div> 
+  </div>
+</footer>
+
+<div class="main-menu" id="accordionExample">
+    <div class="d-flex">
+      <button type="button" class="close-main-menu">
+        <span class="bar bg-re-yellow"></span>
+        <span class="bar bg-re-red"></span>
+      </button>
+
+      <div class="top-menu--mobile header-right d-flex">
+                            <a href="https://www.reseau-entreprendre.org" class="fede-link">Site&nbsp;fédération</a>
+              </div>
+    </div>
+    
+    <ul id="menu-menu-principal" class="accordion menu"><li class="header__nav_item  big red menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3739  accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/testimonios-2/">La Red</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_3739"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_3739"><ul class="">
+
+    <li class="header__nav_item  red menu-item menu-item-type-post_type menu-item-object-page menu-item-1192   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/nos-apoyan/">Colaboradores</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  big yellow menu-item menu-item-type-post_type menu-item-object-page menu-item-5146   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/empresario-2/">Empresario</a></span>
+</li><li class="header__nav_item  big blue separator menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-5127   accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/emprendedor-2/">Emprendedor</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_5127"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_5127"><ul class="">
+
+    <li class="header__nav_item  blue menu-item menu-item-type-post_type menu-item-object-page menu-item-792   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/criterios-de-elegibilidad/">Criterios de elegibilidad</a></span>    </li><li class="header__nav_item  blue menu-item menu-item-type-post_type menu-item-object-page menu-item-6269   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/proceso-de-seleccion/">Proceso de selección</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-84   accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/quienes-somos/">Nosotros</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_84"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_84"><ul class="">
+
+    <li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-6559   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/quienes-somos/organos-de-gobierno/">Organo de Gobierno</a></span>    </li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-81   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/empresario/">Participar</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-90   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/contacto/">Contacto</a></span>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-9234   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/actualidad/">Actualidad</a></span>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-12304   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/transparencia/">Transparencia</a></span>
+</li></ul>
+  </div>
+
 <script>
-  let entidadesSocios = [];
+  let entidadesSocios = []; // Para la vista agrupada corporativa
+  let personasPlanas = [];  // Para la vista individual (Modo Foco / Roles)
+  
   const inputBuscador = document.getElementById('buscador-texto');
   const selectSector = document.getElementById('filtro-sector');
   const selectRol = document.getElementById('filtro-rol');
   const contenedorSocios = document.getElementById('grid-socios');
 
-  // Normalizador defensivo para arrays complejos y objetos OData de SharePoint
   const extraerArray = (raw) => {
       if (!raw) return [];
       if (typeof raw === 'object' && !Array.isArray(raw) && raw.Value) return [raw.Value];
@@ -152,8 +265,7 @@
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
-      console.error(error);
-      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar los datos de los socios.</p>`;
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar la base de datos de socios.</p>`;
     }
   }
 
@@ -165,7 +277,7 @@
       const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
       const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
 
-      // Cruce dinámico en memoria para marcas Alumni
+      // Detectar Alumni
       rawPersonasSocias.forEach(socio => {
           socio.isAlumni = rawPersonasEmprendedoras.some(emp => 
               (emp.nombre || '').toLowerCase().trim() === (socio.nombre || '').toLowerCase().trim() &&
@@ -173,15 +285,12 @@
           );
       });
 
-      // Agrupar empresas con normalización estricta de tipos en IDs
+      // 1. Construir matriz AGRUPADA (Vista Corporativa)
       entidadesSocios = rawEmpresasSocias.map(emp => {
           if(emp.sector) dbSectores.add(emp.sector.trim());
           const miembros = rawPersonasSocias.filter(p => (p.empresaVinculada || '').toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
+          miembros.forEach(m => { extraerArray(m.roles).forEach(r => dbRoles.add(r.trim())); });
           
-          miembros.forEach(m => {
-              extraerArray(m.roles).forEach(r => dbRoles.add(r.trim()));
-          });
-
           return {
               id_entidad: 'soc_emp_' + emp.id.toString(),
               is_empresa: true,
@@ -193,7 +302,6 @@
           };
       });
 
-      // Integrar personas físicas de forma limpia
       const personasAsignadas = entidadesSocios.flatMap(e => e.miembros.map(m => m.id.toString()));
       const personasFisicas = rawPersonasSocias.filter(p => !personasAsignadas.includes(p.id.toString()));
       
@@ -210,6 +318,17 @@
           });
       });
 
+      // 2. Construir matriz PLANA (Vista Individual para filtro de Roles)
+      personasPlanas = rawPersonasSocias.map(p => {
+          const emp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (p.empresaVinculada||'').toLowerCase().trim());
+          return {
+              ...p,
+              empresaSector: emp ? emp.sector : '',
+              empresaWeb: emp ? emp.web : ''
+          };
+      });
+
+      // Rellenar filtros
       [...dbSectores].sort().forEach(s => selectSector.insertAdjacentHTML('beforeend', `<option value="${s}">${s}</option>`));
       [...dbRoles].sort().forEach(r => selectRol.insertAdjacentHTML('beforeend', `<option value="${r}">${r}</option>`));
 
@@ -221,26 +340,57 @@
       const sector = selectSector.value;
       const rol = selectRol.value;
 
-      const resultados = entidadesSocios.filter(entidad => {
-          if (sector !== 'todos' && entidad.sector !== sector) return false;
-          
-          const matchRol = rol === 'todos' || entidad.miembros.some(m => extraerArray(m.roles).includes(rol));
-          if (!matchRol) return false;
+      if (rol !== 'todos') {
+          // ==========================================
+          // MODO INDIVIDUAL: El usuario filtró por Rol
+          // ==========================================
+          const personasFiltradas = personasPlanas.filter(p => {
+              const matchRol = extraerArray(p.roles).includes(rol);
+              if (!matchRol) return false;
+              
+              const matchSector = sector === 'todos' || p.empresaSector === sector;
+              if (!matchSector && p.empresaVinculada) return false; // Ignoramos sector si es persona independiente sin empresa
+              
+              if (texto !== '') {
+                  const strBusqueda = `${p.nombre} ${p.cargo||''} ${p.empresaVinculada||''} ${extraerArray(p.roles).join(' ')}`.toLowerCase();
+                  if (!strBusqueda.includes(texto)) return false;
+              }
+              return true;
+          });
+          pintarGridPersonas(personasFiltradas);
+      } else {
+          // ==========================================
+          // MODO CORPORATIVO: Vista agrupada por defecto
+          // ==========================================
+          const entidadesFiltradas = [];
+          entidadesSocios.forEach(entidad => {
+              if (sector !== 'todos' && entidad.sector !== sector && entidad.is_empresa) return;
 
-          if (texto !== '') {
-              let stringBusqueda = `${entidad.nombre} ${entidad.sector || ''}`.toLowerCase();
-              entidad.miembros.forEach(m => {
-                  stringBusqueda += ` ${m.nombre} ${m.cargo || ''} ${extraerArray(m.roles).join(' ')}`;
-              });
-              if (!stringBusqueda.includes(texto)) return false;
-          }
-          return true;
-      });
+              if (texto !== '') {
+                  // Si el texto coincide con el nombre de la empresa, la incluimos con todos sus miembros
+                  const matchEmpresa = `${entidad.nombre} ${entidad.sector || ''}`.toLowerCase().includes(texto);
+                  
+                  // Ocultamos a los miembros de la empresa que no coincidan con la búsqueda de texto
+                  const miembrosMatch = entidad.miembros.filter(m => 
+                      `${m.nombre} ${m.cargo || ''} ${extraerArray(m.roles).join(' ')}`.toLowerCase().includes(texto)
+                  );
 
-      pintarGrid(resultados);
+                  if (matchEmpresa) {
+                      entidadesFiltradas.push(entidad);
+                  } else if (miembrosMatch.length > 0) {
+                      // Solo mostramos la tarjeta si quedó al menos un socio vivo tras el filtro
+                      entidadesFiltradas.push({ ...entidad, miembros: miembrosMatch });
+                  }
+              } else {
+                  entidadesFiltradas.push(entidad);
+              }
+          });
+          pintarGridAgrupado(entidadesFiltradas);
+      }
   }
 
-  function pintarGrid(datos) {
+  // RENDER 1: VISTA CORPORATIVA (Empresa > Socios)
+  function pintarGridAgrupado(datos) {
       contenedorSocios.innerHTML = '';
       if (datos.length === 0) {
           contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay socios registrados bajo estos filtros.</p>';
@@ -298,6 +448,57 @@
                   </div>
               </div>
               ${htmlMiembros}
+              ${footerHTML}
+          `;
+          fragment.appendChild(card);
+      });
+      contenedorSocios.appendChild(fragment);
+  }
+
+  // RENDER 2: VISTA INDIVIDUAL (Socio > Empresa secundario) - Activa en filtro por Rol
+  function pintarGridPersonas(datosPersonas) {
+      contenedorSocios.innerHTML = '';
+      if (datosPersonas.length === 0) {
+          contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay directivos con ese rol específico.</p>';
+          return;
+      }
+
+      const fragment = document.createDocumentFragment();
+
+      datosPersonas.forEach(p => {
+          const card = document.createElement('article');
+          card.className = 'card-entidad';
+          
+          const imagenHtml = `<img src="${p.foto}" class="entidad-avatar" onerror="this.src='https://via.placeholder.com/90/e2e8f0/64748b?text=👤'">`;
+          
+          const htmlCargo = p.cargo ? `<p style="font-size:0.85rem; color:#64748b; margin:0 0 5px 0;">${p.cargo}</p>` : '';
+          const htmlEmpresa = p.empresaVinculada ? `<p style="font-size:0.8rem; font-weight:600; color:#002b5c; margin:0;"><span style="color:#94a3b8; margin-right:4px;">🏢</span>${p.empresaVinculada}</p>` : '';
+          
+          let badgesHTML = '';
+          if (p.isAlumni) badgesHTML += `<span class="badge-rol badge-alumni">Alumni</span>`;
+          extraerArray(p.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
+
+          const mentorizados = extraerArray(p.proyectosMentorizados);
+          const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
+          
+          const htmlLinkedin = p.linkedin ? `<div style="margin-top:10px;"><a href="${p.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a></div>` : '';
+
+          const footerHTML = p.empresaWeb ? `<div class="card-footer"><a href="${p.empresaWeb}" target="_blank" class="btn-web">Web de la empresa ↗</a></div>` : '';
+
+          card.innerHTML = `
+              <div class="card-header is-fisica">
+                  ${imagenHtml}
+                  <div class="entidad-info">
+                      <h3 class="entidad-nombre">${p.nombre}</h3>
+                      ${htmlCargo}
+                      ${htmlEmpresa}
+                  </div>
+              </div>
+              <div class="miembros-list">
+                  ${badgesHTML ? `<div class="roles-container mb-2">${badgesHTML}</div>` : ''}
+                  ${mentorizaHTML}
+                  ${htmlLinkedin}
+              </div>
               ${footerHTML}
           `;
           fragment.appendChild(card);
