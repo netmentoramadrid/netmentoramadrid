@@ -29,7 +29,7 @@
         .panel-controles input, .panel-controles select {
             padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
             font-size: 15px; flex: 1; min-width: 200px; outline: none;
-            box-sizing: border-box; background-color: #fff;
+            box-sizing: border-box; background-color: #fff; color: var(--dir-text-dark);
         }
         .panel-controles input:focus, .panel-controles select:focus {
             border-color: var(--dir-accent); box-shadow: 0 0 0 3px rgba(0,177,89,0.1);
@@ -48,10 +48,10 @@
         .card-entidad {
             position: relative; background: var(--dir-bg-card); border-radius: 16px; border: 1px solid var(--dir-border-light);
             box-shadow: 0 4px 12px rgba(15,23,42,0.03); display: flex; flex-direction: column; overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
         }
         .card-entidad:hover {
-            transform: translateY(-3px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
+            transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
         }
         
         .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 120px; height: 120px; overflow: hidden; z-index: 10; pointer-events: none;}
@@ -59,12 +59,12 @@
         .ribbon-blue { background: #2563eb; } 
         .ribbon-gold { background: #ca8a04; } 
 
-        .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; flex-direction: column; items: flex-start; gap: 10px; position: relative; border-top: 5px solid var(--dir-accent); }
+        .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; flex-direction: column; items: flex-start; gap: 12px; position: relative; border-top: 5px solid var(--dir-accent); }
         .header-main-info { display: flex; gap: 20px; align-items: center; width: 100%; }
 
         .entidad-logo { width: 90px; height: 90px; border-radius: 12px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 8px; flex-shrink: 0; }
         .entidad-info { flex-grow: 1; }
-        .entidad-nombre { margin: 0 0 2px 0; font-size: 1.35rem; line-height: 1.2; font-weight: 700; color: #0f172a;}
+        .entidad-nombre { margin: 0 0 4px 0; font-size: 1.35rem; line-height: 1.2; font-weight: 700; color: #0f172a;}
         .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: block; margin-bottom: 2px; }
         .entidad-fecha { font-size: 0.75rem; color: var(--dir-accent); font-weight: 700; display: block;}
         
@@ -80,8 +80,8 @@
 
         .mentores-wrapper { margin-bottom: 20px; background: #f1f5f9; padding: 12px 15px; border-radius: 12px; border: 1px solid #cbd5e1; }
         
-        .link-interactive-modal { cursor: pointer; display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 6px; border-radius: 8px; transition: background 0.2s; }
-        .link-interactive-modal:hover { background: #e2e8f0; }
+        .link-interactive-modal { cursor: pointer; display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 6px; border-radius: 8px; transition: background 0.2s; border: 1px solid transparent; }
+        .link-interactive-modal:hover { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
 
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
@@ -91,10 +91,13 @@
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
 
-        .popover-container { position: fixed; z-index: 99999; background: white; border-radius: 16px; border: 1px solid var(--dir-border-light); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); width: 360px; pointer-events: none; opacity: 0; transform: scale(0.95); transition: opacity 0.15s ease, transform 0.15s ease; padding: 0; overflow: hidden; }
-        .popover-container.active { opacity: 1; transform: scale(1); pointer-events: auto; }
-        .popover-close-btn { position: absolute; top: 10px; right: 10px; background: white; border: 1px solid var(--dir-border-light); width: 28px; height: 26px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--dir-text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .popover-close-btn:hover { background: #f1f5f9; }
+        /* MODAL CENTRAL UX 2026 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.15s ease-out; padding: 20px; box-sizing: border-box; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; width: 100%; max-width: 420px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.1s;}
+        .modal-close-btn:hover { background: #f1f5f9; }
     </style>
 </head>
 <body>
@@ -114,15 +117,16 @@
     </div>
 </main>
 
-<div id="popover-ecosistema" class="popover-container"></div>
+<div id="modal-ecosistema" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="cerrarModal()">✕</button>
+        <div id="modal-body"></div>
+    </div>
+</div>
 
 <script>
   let datosGlobalesBrutos = [];
   let entidadesEmprendedores = [];
-  
-  const popover = document.getElementById('popover-ecosistema');
-  let popoverLocked = false;
-  let popoverActiveTarget = null;
 
   const inputBuscador = document.getElementById('buscador-texto');
   const selectSector = document.getElementById('filtro-sector');
@@ -145,6 +149,7 @@
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
+      console.error(error);
       document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center; padding:25px;">Error al cargar el histórico de empresas premiadas.</p>`;
     }
   }
@@ -174,7 +179,6 @@
           }).map(m => {
               const mentorEmp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (m.empresaVinculada||'').toLowerCase().trim());
               
-              // Inyectamos la insignia en el popup del mentor si es necesario
               const isAlumniMentor = rawPersonasEmprendedoras.some(pEmp => 
                   (pEmp.nombre || '').toLowerCase().trim() === (m.nombre || '').toLowerCase().trim() &&
                   (pEmp.empresaVinculada || '').toLowerCase().trim() === (m.empresaVinculada || '').toLowerCase().trim()
@@ -184,6 +188,13 @@
           });
 
           const isSocia = rawEmpresasSocias.some(es => (es.nombre||'').toLowerCase().trim() === (emp.nombre||'').toLowerCase().trim());
+          
+          // DETECTOR DE ESTADO PARA EXTRAER EL EXIT DESDE TU COLUMNA DE SHAREPOINT
+          let statusExit = false;
+          if (emp.Estado || emp.estado) {
+              const valEstado = (emp.Estado || emp.estado).toString().toLowerCase().trim();
+              if (valEstado === 'exit') statusExit = true;
+          }
 
           return {
               id_entidad: 'emp_prem_' + emp.id.toString(),
@@ -193,7 +204,7 @@
               web: emp.web,
               descripcion: emp.descripcion || '',
               anioComite: anio,
-              isExit: emp.isExit || false,
+              isExit: statusExit,
               isSocia: isSocia,
               mentores: mentoresReconciliados,
               miembros: rawPersonasEmprendedoras.filter(p => (p.empresaVinculada || '').toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim())
@@ -229,7 +240,7 @@
 
   function pintarGrid(datos) {
       contenedorEmprendedores.innerHTML = '';
-      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay empresas que coincidan con la búsqueda.</p>'; return; }
+      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay registros de empresas bajo estos filtros.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -262,9 +273,12 @@
                  const mLogo = mentor.logo ? `<img src="${mentor.logo}" style="height:24px; max-width:60px; object-fit:contain; margin-left:auto;" onerror="this.style.display='none'">` : '';
                  
                  listaMentores += `
-                     <div class="link-interactive-modal" data-name="${mentor.nombre.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">
+                     <div class="link-interactive-modal" data-name="${mentor.nombre.replace(/'/g, "&apos;")}" onclick="abrirModalMentor(event)">
                          ${mFoto}
-                         <span style="font-size:0.85rem; color:#0f172a; font-weight:600;">${mentor.nombre}${mEmpresa}</span>
+                         <div style="display:flex; flex-direction:column;">
+                             <span style="font-size:0.9rem; color:#0f172a; font-weight:700;">${mentor.nombre}</span>
+                             ${mEmpresa}
+                         </div>
                          ${mLogo}
                      </div>
                  `;
@@ -272,7 +286,7 @@
              
              htmlMiembros += `
                  <div class="mentores-wrapper">
-                     <div style="color: #0f172a; font-weight: 800; font-size: 0.75rem; text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid #cbd5e1; padding-bottom:6px; margin-bottom:4px;">${labelText}</div>
+                     <div style="color: #0f172a; font-weight: 800; font-size: 0.75rem; text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid #cbd5e1; padding-bottom:8px; margin-bottom:8px;">${labelText}</div>
                      ${listaMentores}
                  </div>
              `;
@@ -321,58 +335,22 @@
       contenedorEmprendedores.appendChild(fragment);
   }
 
-  function posicionarPopover(e) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const popoverWidth = 360;
-      let left = rect.left + window.scrollX + (rect.width / 2) - (popoverWidth / 2);
-      let top = rect.top + window.scrollY - 10;
-      
-      if (left < 10) left = 10;
-      if (left + popoverWidth > window.innerWidth) left = window.innerWidth - popoverWidth - 10;
-      
-      popover.style.left = `${left}px`;
-      popover.style.top = `${top}px`;
-      popover.style.transform = `translateY(-100%) scale(1)`;
+  function abrirModalMentor(e) {
+      e.preventDefault(); e.stopPropagation();
+      const nombre = e.currentTarget.getAttribute('data-name');
+      construirContenidoModal(nombre);
+      document.getElementById('modal-ecosistema').classList.add('active');
   }
 
-  function handleLinkHover(e) {
-      if (popoverLocked) return;
-      popoverActiveTarget = e.currentTarget;
-      const nombreMentor = e.currentTarget.getAttribute('data-name');
-      construirContenidoPopover(nombreMentor);
-      posicionarPopover(e);
-      popover.classList.add('active');
+  function cerrarModal() {
+      document.getElementById('modal-ecosistema').classList.remove('active');
   }
 
-  function handleLinkLeave(e) {
-      if (popoverLocked) return;
-      popover.classList.remove('active');
-      popoverActiveTarget = null;
-  }
-
-  function handleLinkClick(e) {
-      e.stopPropagation();
-      popoverLocked = true;
-      popoverActiveTarget = e.currentTarget;
-      const nombreMentor = e.currentTarget.getAttribute('data-name');
-      construirContenidoPopover(nombreMentor, true);
-      posicionarPopover(e);
-      popover.classList.add('active');
-  }
-
-  function cerrarPopoverManual() {
-      popoverLocked = false;
-      popover.classList.remove('active');
-      popoverActiveTarget = null;
-  }
-
-  document.addEventListener('click', (e) => {
-      if (popoverLocked && !popover.contains(e.target) && (!popoverActiveTarget || !popoverActiveTarget.contains(e.target))) {
-          cerrarPopoverManual();
-      }
+  document.getElementById('modal-ecosistema').addEventListener('click', (e) => {
+      if(e.target === document.getElementById('modal-ecosistema')) cerrarModal();
   });
 
-  function construirContenidoPopover(nombreMentorRaw, incluirBotonCerrar = false) {
+  function construirContenidoModal(nombreMentorRaw) {
       const nombre = nombreMentorRaw.toLowerCase().trim();
       const rawSocios = datosGlobalesBrutos.filter(d => d.tipo === 'socio');
       const rawEmpresasSocias = datosGlobalesBrutos.filter(d => d.tipo === 'empresa_socia');
@@ -381,25 +359,29 @@
       const socio = rawSocios.find(s => (s.nombre||'').toLowerCase().trim() === nombre);
       
       if (!socio) {
-          popover.innerHTML = `<div style="padding:20px; background:white; font-size:0.85rem; text-align:center;">Ficha del mentor no disponible.</div>`;
+          document.getElementById('modal-body').innerHTML = `
+              <div style="padding:40px 20px; text-align:center;">
+                  <h3 style="font-size:1.2rem; color:#0f172a; margin-bottom:10px;">${nombreMentorRaw}</h3>
+                  <p style="color:#64748b; font-size:0.9rem;">La ficha detallada de este mentor no está disponible actualmente en el directorio activo.</p>
+              </div>`;
           return;
       }
 
       const emp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (socio.empresaVinculada||'').toLowerCase().trim());
       
       const fotoUrl = socio.foto ? socio.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
-      const imagenHtml = `<img src="${fotoUrl}" class="entidad-avatar" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid var(--dir-border-light); background:white;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
-      const htmlCargoInterno = socio.cargoInterno ? `<p style="font-size:0.85rem; color:#00B159; font-weight:700; margin:2px 0 0 0;">${socio.cargoInterno}</p>` : '';
+      const imagenHtml = `<img src="${fotoUrl}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid #e2e8f0; margin-bottom:15px; background:white;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
+      const htmlCargoInterno = socio.cargoInterno ? `<p style="font-size:0.95rem; color:#00B159; font-weight:800; margin:0 0 8px 0; letter-spacing:0.02em;">${socio.cargoInterno}</p>` : '';
       
       let htmlEmpresa = '';
       if (socio.empresaVinculada) {
-          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:35px; height:30px; object-fit:contain; border-radius:4px; border:1px solid #e2e8f0; background:white;" onerror="this.style.display='none'">` : '';
+          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:40px; height:40px; object-fit:contain; border-radius:6px; border:1px solid #cbd5e1; background:white;" onerror="this.style.display='none'">` : '';
           htmlEmpresa = `
-              <div style="display:flex; align-items:center; gap:8px; margin-top:10px; padding:8px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0; width:100%; box-sizing:border-box;">
+              <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; padding:12px; background:#f1f5f9; border-radius:10px; border:1px solid #e2e8f0; width:100%; box-sizing:border-box;">
                   ${htmlLogoEmpresa}
                   <div style="text-align:left;">
-                      <p style="font-size:0.8rem; font-weight:700; color:#002b5c; margin:0; line-height:1.2;">${socio.empresaVinculada}</p>
-                      ${socio.cargo ? `<p style="font-size:0.7rem; color:#64748b; margin:1px 0 0 0; line-height:1.1;">${socio.cargo}</p>` : ''}
+                      <p style="font-size:0.95rem; font-weight:700; color:#002b5c; margin:0; line-height:1.2;">${socio.empresaVinculada}</p>
+                      ${socio.cargo ? `<p style="font-size:0.8rem; color:#64748b; margin:2px 0 0 0; line-height:1.2;">${socio.cargo}</p>` : ''}
                   </div>
               </div>
               `;
@@ -411,29 +393,22 @@
           (pEmp.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
       );
 
-      if (isAlumni) badgesHTML += `<span class="badge-rol badge-alumni" style="font-size:0.65rem; padding:3px 8px; border-radius:6px; background:#fef08a; color:#854d0e; font-weight:600; text-transform:uppercase; letter-spacing:0.02em; margin-right:5px;">Emprendedor premiado</span>`;
-      extraerArray(socio.roles).forEach(r => badgesHTML += `<span class="badge-rol" style="font-size:0.65rem; padding:3px 8px; border-radius:6px; background:#e2e8f0; color:#475569; font-weight:600; text-transform:uppercase; letter-spacing:0.02em; margin-right:5px;">${r}</span>`);
+      if (isAlumni) badgesHTML += `<span style="font-size:0.75rem; padding:4px 10px; border-radius:6px; background:#fef08a; color:#854d0e; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;">Emprendedor premiado</span>`;
+      extraerArray(socio.roles).forEach(r => badgesHTML += `<span style="font-size:0.7rem; padding:4px 10px; border-radius:6px; background:#e2e8f0; color:#475569; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;">${r}</span>`);
 
-      const htmlLinkedin = socio.linkedin ? `<div style="margin-top:10px;"><a href="${socio.linkedin}" target="_blank" class="linkedin-link" style="font-size:0.8rem; color:#0a66c2; text-decoration:none; font-weight:600;">LinkedIn ↗</a></div>` : '';
+      const htmlLinkedin = socio.linkedin ? `<a href="${socio.linkedin}" target="_blank" style="font-size:0.85rem; color:#0a66c2; text-decoration:none; font-weight:700; margin-top:20px; display:inline-block; padding:8px 16px; border:1px solid #cbd5e1; border-radius:8px; transition:background 0.2s;">Ver perfil en LinkedIn ↗</a>` : '';
 
-      const closeBtn = incluirBotonCerrar ? `<button class="popover-close-btn" onclick="cerrarPopoverManual()">✕</button>` : '';
-
-      popover.innerHTML = `
-          ${closeBtn}
-          <article class="card-entidad" style="box-shadow:none; border:none; border-radius:0;">
-              <div class="card-header is-fisica" style="border-top:5px solid #94a3b8; display:flex; align-items:center; text-align:left; gap:15px; padding:20px;">
-                  ${imagenHtml}
-                  <div class="entidad-info">
-                      <h3 class="entidad-nombre" style="font-size:1.15rem; margin:0; font-weight:700; color:#0f172a;">${socio.nombre}</h3>
-                      ${htmlCargoInterno}
-                      ${htmlEmpresa}
-                  </div>
-              </div>
-              <div class="miembros-list" style="padding:15px 20px; background:#fafafa;">
-                  ${badgesHTML ? `<div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px;">${badgesHTML}</div>` : ''}
-                  ${htmlLinkedin}
-              </div>
-          </article>
+      document.getElementById('modal-body').innerHTML = `
+          <div style="border-top:5px solid #94a3b8; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px 25px 30px;">
+              ${imagenHtml}
+              <h3 style="font-size:1.5rem; margin:0 0 6px 0; font-weight:800; color:#0f172a; letter-spacing:-0.02em;">${socio.nombre}</h3>
+              ${htmlCargoInterno}
+              ${htmlEmpresa}
+          </div>
+          <div style="padding:25px 30px; background:#fafafa; border-top:1px solid #e2e8f0; text-align:center;">
+              ${badgesHTML ? `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:8px;">${badgesHTML}</div>` : ''}
+              ${htmlLinkedin}
+          </div>
       `;
   }
 
