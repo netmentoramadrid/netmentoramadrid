@@ -5,31 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empresas premiadas - Netmentora Madrid</title>
     <style>
-        :root { --dir-primary: #002b5c; --dir-accent: #00B159; --dir-bg-card: #ffffff; --dir-text-dark: #1e293b; --dir-text-muted: #64748b; --dir-border-light: #e2e8f0; }
-        .directorio-contenedor { max-width: 1280px; margin: 40px auto; padding: 0 20px; font-family: system-ui, -apple-system, sans-serif; color: var(--dir-text-dark); }
-        .panel-controles { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light); }
-        .panel-controles input, .panel-controles select { padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; flex: 1; min-width: 200px; outline: none; box-sizing: border-box; }
-        .panel-controles input:focus, .panel-controles select:focus { border-color: var(--dir-accent); }
-        .section-title { font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light); font-weight: bold; }
-        .grid-entidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+        :root {
+            --dir-primary: #002b5c; 
+            --dir-accent: #00B159; 
+            --dir-bg-card: #ffffff;
+            --dir-text-dark: #1e293b;
+            --dir-text-muted: #64748b;
+            --dir-border-light: #e2e8f0;
+        }
+
+        .directorio-contenedor {
+            max-width: 1280px; margin: 40px auto; padding: 0 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--dir-text-dark);
+        }
+
+        .panel-controles {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px;
+            display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light);
+        }
+        .panel-controles input, .panel-controles select {
+            padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 15px; flex: 1; min-width: 200px; outline: none;
+            box-sizing: border-box; background-color: #fff;
+        }
+        .panel-controles input:focus, .panel-controles select:focus {
+            border-color: var(--dir-accent);
+        }
+
+        .section-title {
+            font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0;
+            padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light);
+            font-weight: bold;
+        }
+
+        .grid-entidades {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px;
+        }
+
+        .card-entidad {
+            position: relative; background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-entidad:hover {
+            transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
         
-        .card-entidad { position: relative; background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-        .card-entidad:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        
-        /* Ribetes Múltiples */
         .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 110px; height: 110px; overflow: hidden; z-index: 10; pointer-events: none;}
         .ribbon { position: absolute; top: 22px; right: -28px; padding: 4px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: 0.5px; text-align: center; color: white;}
-        .ribbon-blue { background: #2563eb; } /* Exit */
-        .ribbon-gold { background: #ca8a04; } /* Empresa Socia */
+        .ribbon-blue { background: #2563eb; } 
+        .ribbon-gold { background: #ca8a04; } 
 
         .card-header { padding: 25px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; flex-direction: column; items: flex-start; gap: 10px; position: relative; border-top: 4px solid var(--dir-accent); }
         .header-main-info { display: flex; gap: 20px; align-items: center; width: 100%; }
+
         .entidad-logo { width: 90px; height: 90px; border-radius: 8px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0; }
         .entidad-info { flex-grow: 1; }
         .entidad-nombre { margin: 0 0 2px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
         .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: block; margin-bottom: 2px; }
         .entidad-fecha { font-size: 0.75rem; color: var(--dir-accent); font-weight: bold; display: block;}
-        .entidad-descripcion { font-size: 0.85rem; color: var(--dir-text-muted); margin: 5px 0 0 0; line-height: 1.45; }
+        
+        /* Modificado: Descripciones 100% íntegras sin recortes */
+        .entidad-descripcion { font-size: 0.85rem; color: var(--dir-text-muted); margin: 5px 0 0 0; line-height: 1.45; text-align: justify; }
 
         .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
         .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light); }
@@ -40,8 +79,10 @@
         .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 5px 0; }
 
         .mentores-wrapper { margin-bottom: 15px; background: #f1f5f9; padding: 12px 15px; border-radius: 8px; border: 1px solid #cbd5e1; }
-        .link-modal { cursor: pointer; display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 4px; border-radius: 6px; transition: background 0.2s; }
-        .link-modal:hover { background: #e2e8f0; }
+        
+        /* Enlaces interactivos del Popover */
+        .link-interactive-modal { cursor: pointer; display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 6px; border-radius: 6px; transition: background 0.2s; }
+        .link-interactive-modal:hover { background: #e2e8f0; }
 
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
@@ -51,46 +92,40 @@
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
 
-        /* Estilos del Modal (Popup) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: transparent; width: 100%; max-width: 450px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        .modal-close { position: absolute; top: -15px; right: -15px; background: white; border: 2px solid var(--dir-border-light); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; color: var(--dir-text-dark); transition: background 0.2s;}
-        .modal-close:hover { background: #f1f5f9; }
-        #modal-body .card-entidad { margin: 0; pointer-events: auto; }
+        /* Estilos del Popover Moderno 2026 */
+        .popover-container { position: fixed; z-index: 99999; background: white; border-radius: 16px; border: 1px solid var(--dir-border-light); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); width: 360px; pointer-events: none; opacity: 0; transform: scale(0.95); transition: opacity 0.15s ease, transform 0.15s ease; padding: 0; overflow: hidden; }
+        .popover-container.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+        .popover-close-btn { position: absolute; top: 10px; right: 10px; background: white; border: 1px solid var(--dir-border-light); width: 28px; height: 26px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--dir-text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .popover-close-btn:hover { background: #f1f5f9; }
     </style>
 </head>
 <body>
-
-<!-- INSERTA TU HEADER DE WORDPRESS AQUÍ -->
 
 <main class="directorio-contenedor">
     <div class="panel-controles">
         <input type="text" id="buscador-texto" placeholder="Buscar empresa, emprendedor o descripción...">
         <select id="filtro-sector"><option value="todos">Sectores: Todos</option></select>
-        <select id="filtro-anio"><option value="todos">Año de premiación: Todos</option></select>
+        <select id="filtro-anio"><option value="todos">Año de aceptación: Todos</option></select>
     </div>
+    
     <div id="loading" class="estado-carga">Cargando Empresas premiadas...</div>
+
     <div id="contenido-directorio" class="hidden">
         <h2 class="section-title">Empresas premiadas</h2>
         <div id="grid-emprendedores" class="grid-entidades"></div>
     </div>
 </main>
 
-<!-- El contenedor del Popup Modal -->
-<div id="modal-directorio" class="modal-overlay">
-    <div class="modal-content">
-        <button class="modal-close" onclick="cerrarModal()">✕</button>
-        <div id="modal-body"></div>
-    </div>
-</div>
-
-<!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
+<div id="popover-ecosistema" class="popover-container"></div>
 
 <script>
   let datosGlobalesBrutos = [];
   let entidadesEmprendedores = [];
+  
+  const popover = document.getElementById('popover-ecosistema');
+  let popoverLocked = false;
+  let popoverActiveTarget = null;
+
   const inputBuscador = document.getElementById('buscador-texto');
   const selectSector = document.getElementById('filtro-sector');
   const selectAnio = document.getElementById('filtro-anio');
@@ -112,7 +147,8 @@
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
-      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar el histórico de empresas.</p>`;
+      console.error(error);
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar el histórico de empresas premiadas.</p>`;
     }
   }
 
@@ -143,7 +179,6 @@
               return { nombre: m.nombre, foto: m.foto, empresa: m.empresaVinculada, logo: mentorEmp ? mentorEmp.logo : null };
           });
 
-          // Detectamos si la empresa premiada es actualmente Empresa Socia
           const isSocia = rawEmpresasSocias.some(es => (es.nombre||'').toLowerCase().trim() === (emp.nombre||'').toLowerCase().trim());
 
           return {
@@ -190,7 +225,7 @@
 
   function pintarGrid(datos) {
       contenedorEmprendedores.innerHTML = '';
-      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay empresas que coincidan con la búsqueda.</p>'; return; }
+      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay registros de empresas bajo estos filtros.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -220,11 +255,12 @@
                  const mFoto = mentor.foto 
                     ? `<img src="${mentor.foto}" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
                     : `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;">`;
-                 const mEmpresa = mentor.empresa ? ` <span style="color:#64748b; font-weight:400;">(${mentor.empresa})</span>` : '';
+                 const mEmpresa = mentor.empresa ? ` <span style="color:#64748b; font-weight:400;">(Empresa)</span>` : '';
                  const mLogo = mentor.logo ? `<img src="${mentor.logo}" style="height:20px; max-width:50px; object-fit:contain; margin-left:auto;" onerror="this.style.display='none'">` : '';
                  
+                 // Hover y Clic vinculados al popover dinámico
                  listaMentores += `
-                     <div class="link-modal" onclick="abrirModalMentor('${mentor.nombre.replace(/'/g, "\\'")}')" title="Ver ficha del mentor">
+                     <div class="link-interactive-modal" data-name="${mentor.nombre.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">
                          ${mFoto}
                          <span style="font-size:0.85rem; color:#0f172a; font-weight:600;">${mentor.nombre}${mEmpresa}</span>
                          ${mLogo}
@@ -261,7 +297,7 @@
           });
           htmlMiembros += '</div>';
 
-          const footerHTML = entidad.web ? `<div class="card-footer"><a href="${entidad.web}" target="_blank" class="btn-web">Visitar web de la empresa ↗</a></div>` : '';
+          const footerHTML = entidad.web ? `<div class="card-footer"><a href="${entidad.web}" target="_blank" class="btn-web">Visitar web corporativa ↗</a></div>` : '';
 
           card.innerHTML = `
               ${ribbonHtml}
@@ -284,16 +320,61 @@
       contenedorEmprendedores.appendChild(fragment);
   }
 
-  // =========================================
-  // SISTEMA DE VENTANAS EMERGENTES (MODAL)
-  // =========================================
-  const modalOverlay = document.getElementById('modal-directorio');
-  const modalBody = document.getElementById('modal-body');
+  // =========================================================
+  // CONTROLADOR DE POPOVERS INTERACTIVOS (INVERSO: SOCIOS EN POPUP)
+  // =========================================================
+  function posicionarPopover(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const popoverWidth = 360;
+      let left = rect.left + window.scrollX + (rect.width / 2) - (popoverWidth / 2);
+      let top = rect.top + window.scrollY - 10;
+      
+      if (left < 10) left = 10;
+      if (left + popoverWidth > window.innerWidth) left = window.innerWidth - popoverWidth - 10;
+      
+      popover.style.left = `${left}px`;
+      popover.style.top = `${top}px`;
+      popover.style.transform = `translateY(-100%) scale(1)`;
+  }
 
-  function cerrarModal() { modalOverlay.classList.remove('active'); }
-  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) cerrarModal(); });
+  function handleLinkHover(e) {
+      if (popoverLocked) return;
+      popoverActiveTarget = e.currentTarget;
+      const nombreMentor = e.currentTarget.getAttribute('data-name');
+      construirContenidoPopover(nombreMentor);
+      posicionarPopover(e);
+      popover.classList.add('active');
+  }
 
-  function abrirModalMentor(nombreMentorRaw) {
+  function handleLinkLeave(e) {
+      if (popoverLocked) return;
+      popover.classList.remove('active');
+      popoverActiveTarget = null;
+  }
+
+  function handleLinkClick(e) {
+      e.stopPropagation();
+      popoverLocked = true;
+      popoverActiveTarget = e.currentTarget;
+      const nombreMentor = e.currentTarget.getAttribute('data-name');
+      construirContenidoPopover(nombreMentor, true);
+      posicionarPopover(e);
+      popover.classList.add('active');
+  }
+
+  function cerrarPopoverManual() {
+      popoverLocked = false;
+      popover.classList.remove('active');
+      popoverActiveTarget = null;
+  }
+
+  document.addEventListener('click', (e) => {
+      if (popoverLocked && !popover.contains(e.target) && !popoverActiveTarget.contains(e.target)) {
+          cerrarPopoverManual();
+      }
+  });
+
+  function construirContenidoPopover(nombreMentorRaw, incluirBotonCerrar = false) {
       const nombre = nombreMentorRaw.toLowerCase().trim();
       const rawSocios = datosGlobalesBrutos.filter(d => d.tipo === 'socio');
       const rawEmpresasSocias = datosGlobalesBrutos.filter(d => d.tipo === 'empresa_socia');
@@ -301,64 +382,50 @@
       const socio = rawSocios.find(s => (s.nombre||'').toLowerCase().trim() === nombre);
       
       if (!socio) {
-          modalBody.innerHTML = `<div style="padding:40px; background:white; border-radius:12px; text-align:center;">La ficha del mentor no está disponible actualmente.</div>`;
-          modalOverlay.classList.add('active');
+          popover.innerHTML = `<div style="padding:20px; background:white; font-size:0.85rem; text-align:center;">Ficha del mentor no disponible.</div>`;
           return;
       }
 
       const emp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (socio.empresaVinculada||'').toLowerCase().trim());
       
-      const imagenHtml = `<img src="${socio.foto}" class="entidad-avatar" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:2px solid var(--dir-border-light); background:white;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
-      const htmlCargoInterno = socio.cargoInterno ? `<p style="font-size:0.9rem; color:#00B159; font-weight:700; margin:4px 0 0 0;">${socio.cargoInterno}</p>` : '';
+      const fotoUrl = socio.foto ? socio.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
+      const imagenHtml = `<img src="${fotoUrl}" class="entidad-avatar" style="width:70px; height:70px; border-radius:50%; object-fit:cover; border:2px solid var(--dir-border-light); background:white;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
+      const htmlCargoInterno = socio.cargoInterno ? `<p style="font-size:0.85rem; color:#00B159; font-weight:700; margin:2px 0 0 0;">${socio.cargoInterno}</p>` : '';
       
       let htmlEmpresa = '';
       if (socio.empresaVinculada) {
-          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:40px; height:40px; object-fit:contain; border-radius:4px; border:1px solid #e2e8f0; background:white; flex-shrink:0;" onerror="this.style.display='none'">` : '';
+          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:35px; height:30px; object-fit:contain; border-radius:4px; border:1px solid #e2e8f0; background:white;" onerror="this.style.display='none'">` : '';
           htmlEmpresa = `
-              <div style="display:flex; align-items:center; gap:10px; margin-top:15px; padding:10px; background:#f8fafc; border-radius:8px; border:1px solid #e2e8f0;">
+              <div style="display:flex; align-items:center; gap:8px; margin-top:10px; padding:8px; background:#f8fafc; border-radius:6px; border:1px solid #e2e8f0; width:100%; box-sizing:border-box;">
                   ${htmlLogoEmpresa}
                   <div style="text-align:left;">
-                      <p style="font-size:0.85rem; font-weight:700; color:#002b5c; margin:0; line-height:1.2;">${socio.empresaVinculada}</p>
-                      ${socio.cargo ? `<p style="font-size:0.75rem; color:#64748b; margin:2px 0 0 0; line-height:1.2;">${socio.cargo}</p>` : ''}
+                      <p style="font-size:0.8rem; font-weight:700; color:#002b5c; margin:0; line-height:1.2;">${socio.empresaVinculada}</p>
+                      ${socio.cargo ? `<p style="font-size:0.7rem; color:#64748b; margin:1px 0 0 0; line-height:1.1;">${socio.cargo}</p>` : ''}
                   </div>
               </div>
-          `;
-      } else if (socio.cargo) {
-          htmlEmpresa = `<p style="font-size:0.85rem; color:#64748b; margin:10px 0 0 0;">${socio.cargo}</p>`;
+              `;
       }
 
-      let badgesHTML = '';
-      extraerArray(socio.roles).forEach(r => badgesHTML += `<span class="badge-rol" style="font-size:0.7rem; padding:2px 6px; border-radius:4px; background:#e2e8f0; color:#475569; font-weight:500;">${r}</span>`);
+      const closeBtn = incluirBotonCerrar ? `<button class="popover-close-btn" onclick="cerrarPopoverManual()">✕</button>` : '';
 
-      const mentorizados = extraerArray(socio.proyectosMentorizados);
-      const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
-      const htmlLinkedin = socio.linkedin ? `<div style="margin-top:10px;"><a href="${socio.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a></div>` : '';
-      const footerHTML = emp && emp.web ? `<div class="card-footer"><a href="${emp.web}" target="_blank" class="btn-web" style="color:var(--dir-primary);">Web de la empresa ↗</a></div>` : '';
-
-      modalBody.innerHTML = `
-          <article class="card-entidad" style="box-shadow:none;">
-              <div class="card-header is-fisica" style="border-top:4px solid #94a3b8; display:flex; flex-direction:column; text-align:center; padding-top:30px;">
+      popover.innerHTML = `
+          ${closeBtn}
+          <article class="card-entidad" style="box-shadow:none; border:none; border-radius:0;">
+              <div class="card-header is-fisica" style="border-top:4px solid #94a3b8; display:flex; align-items:center; text-align:left; gap:15px; padding:15px;">
                   ${imagenHtml}
-                  <div class="entidad-info" style="width:100%;">
-                      <h3 class="entidad-nombre" style="margin:0 0 4px 0; font-size:1.3rem; margin-top:10px;">${socio.nombre}</h3>
+                  <div class="entidad-info">
+                      <h3 class="entidad-nombre" style="font-size:1.05rem; margin:0;">${socio.nombre}</h3>
                       ${htmlCargoInterno}
                       ${htmlEmpresa}
                   </div>
               </div>
-              <div class="miembros-list" style="padding:15px 20px; background:#fafafa;">
-                  ${badgesHTML ? `<div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px;">${badgesHTML}</div>` : ''}
-                  ${mentorizaHTML}
-                  ${htmlLinkedin}
-              </div>
-              ${footerHTML}
           </article>
       `;
-      modalOverlay.classList.add('active');
   }
 
-  inputBuscador.addEventListener('input', renderizarInterfaces);
-  selectSector.addEventListener('change', renderizarInterfaces);
-  selectAnio.addEventListener('change', renderizarInterfaces);
+  inputBuscador.addEventListener('input', renderInterfaces);
+  selectSector.addEventListener('change', renderInterfaces);
+  selectAnio.addEventListener('change', renderInterfaces);
 
   cargarDatos();
 </script>
