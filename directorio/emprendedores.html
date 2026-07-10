@@ -62,7 +62,6 @@
 
         .header-main-info { display: flex; gap: 20px; align-items: center; width: 100%; }
 
-        /* Presencia contundente del logotipo del proyecto */
         .entidad-logo {
             width: 90px; height: 90px; border-radius: 8px; object-fit: contain;
             background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0;
@@ -70,7 +69,6 @@
         .entidad-info { flex-grow: 1; }
         .entidad-nombre { margin: 0 0 2px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
         
-        /* Sector suavizado */
         .entidad-sector {
             font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500;
             display: inline-block;
@@ -85,7 +83,6 @@
         }
         .miembro-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         
-        /* Fotos más grandes de los emprendedores */
         .miembro-foto { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white;}
         .miembro-datos { flex-grow: 1; }
         .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: var(--dir-text-dark);}
@@ -111,6 +108,42 @@
 </head>
 <body>
 
+<header class="banner">
+  <div class="header-left">
+          <button class="open-main-menu" type="button">
+        <span class="bars">
+          <span class="bar bg-re-blue"></span>
+          <span class="bar bg-re-yellow"></span>
+          <span class="bar bg-re-red"></span>
+        </span>
+                  <span class="text header-left-title">Descubre Netmentora Madrid</span>
+              </button>
+                    <a href="https://www.netmentora.org" class="fede-link hide-on-mobile">Sitio&nbsp;de&nbsp;la&nbsp;federación</a>
+      </div>
+
+  <div class="header-image">
+    <a href="https://www.netmentora.org/madrid/" rel="home">
+              <img src="https://www.netmentora.org/madrid/wp-content/uploads/sites/66/2026/05/logo_madrid_horizontal_quadri-scaled.png" alt="Netmentora Madrid">
+          </a>
+  </div>
+
+  <div class="header-right">
+    <div class="search-icon item">
+      <button type="button" class="toggle-search"><svg class="icon" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.52834 1.33799C10.9415 1.33799 13.7187 4.11522 13.7187 7.52843C13.7187 10.9416 10.9415 13.7189 7.52834 13.7189C4.11516 13.7189 1.33797 10.9416 1.33797 7.52843C1.33797 4.11522 4.11516 1.33799 7.52834 1.33799ZM7.52834 15.0569C9.36359 15.0569 11.0459 14.3946 12.3535 13.2996L16.858 17.8042C16.9887 17.9349 17.16 18 17.3308 18C17.5021 18 17.6733 17.9349 17.804 17.8042C18.0653 17.5429 18.0653 17.1196 17.804 16.8582L13.2995 12.3537C14.3948 11.046 15.0567 9.36371 15.0567 7.52843C15.0567 3.37709 11.6796 0 7.52834 0C3.37705 0 0 3.37709 0 7.52843C0 11.6793 3.37705 15.0569 7.52834 15.0569Z" fill="currentColor" stroke-width="0"></path>
+</svg></button>
+    </div>
+        <nav class="header-end-menu item hide-on-mobile">
+              <ul>
+        <li class=" menu-item">
+                                            <a class="btn btn-sm btn-re-" type="button" href="https://www.netmentora.org/madrid/proceso-de-seleccion/">
+                    Proceso de selección
+                </a>
+        </li>
+</ul>          </nav>  
+  </div>
+</header>
+
 <main class="directorio-contenedor">
     <div class="panel-controles">
         <input type="text" id="buscador-texto" placeholder="Buscar proyecto, emprendedor o descripción...">
@@ -125,6 +158,83 @@
         <div id="grid-emprendedores" class="grid-entidades"></div>
     </div>
 </main>
+
+<div class="pre-footer">
+      <div class="pre-footer_menu">
+      <div class="menu-pre-footer-container"><ul id="menu-pre-footer" class="nav menu"><li id="menu-item-6356" class="red menu-item menu-item-type-post_type menu-item-object-page menu-item-6356"><a href="https://www.netmentora.org/madrid/testimonios-2/">La Red</a></li>
+<li id="menu-item-6354" class="yellow menu-item menu-item-type-post_type menu-item-object-page menu-item-6354"><a href="https://www.netmentora.org/madrid/empresario-2/">Empresario</a></li>
+<li id="menu-item-6355" class="blue menu-item menu-item-type-post_type menu-item-object-page menu-item-6355"><a href="https://www.netmentora.org/madrid/emprendedor-2/">Emprendedor</a></li>
+</ul></div>
+    </div>
+ </div>
+
+<footer class="content-info">
+    <div class="footer-container">
+      <div class="logos">
+                  <img src="https://www.netmentora.org/madrid/wp-content/uploads/sites/66/2026/05/logo_madrid_horizontal_quadri-scaled.png" alt="Netmentora Madrid">
+              </div>
+      <div class="footer-inner flex-nowrap">
+        <div class="social-menu pr-2 items-center col-lg-auto">
+                      <div class="menu-icones-sociales-container"><ul id="menu-icones-sociales-1" class="menu"><li class="twitter menu-item menu-item-type-custom menu-item-object-custom menu-item-278"><a href="https://twitter.com/netmentoramad">Twitter</a></li>
+<li class="linkedin menu-item menu-item-type-custom menu-item-object-custom menu-item-279"><a href="https://www.linkedin.com/company/netmentora-madrid/">Linkedin</a></li>
+</ul></div>
+                  </div>
+        <nav class="header-end-menu">
+                      <ul>
+        <li class=" menu-item">
+                                            <a class="btn btn-sm btn-re-" type="button" href="https://www.netmentora.org/madrid/proceso-de-seleccion/">
+                    Proceso de selección
+                </a>
+        </li>
+</ul>                  </nav>
+      </div>
+    </div>
+    
+    <div class="footer-container">
+      <div class="footer-menu">
+              </div>
+    </div>
+
+  <div class="footer-container copyright-section">
+                <div class="menu-footer-menu-secondary-container"><ul id="menu-footer-menu-secondary" class="menu"><li id="menu-item-8884" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8884"><a href="https://www.netmentora.org/es/informacion-legal/">Información legal</a></li>
+<li id="menu-item-8885" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8885"><a href="https://www.netmentora.org/es/proteccion-de-datos-personales/">Protección de datos personales</a></li>
+</ul></div>
+            <div class="copyright">
+        <span class="d-block pr-2">© Réseau Entreprendre  Tous droits réservés - 2022</span>
+      </div> 
+  </div>
+</footer>
+
+<div class="main-menu" id="accordionExample">
+    <div class="d-flex">
+      <button type="button" class="close-main-menu">
+        <span class="bar bg-re-yellow"></span>
+        <span class="bar bg-re-red"></span>
+      </button>
+
+      <div class="top-menu--mobile header-right d-flex">
+                            <a href="https://www.reseau-entreprendre.org" class="fede-link">Site&nbsp;fédération</a>
+              </div>
+    </div>
+    
+    <ul id="menu-menu-principal" class="accordion menu"><li class="header__nav_item  big red menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3739  accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/testimonios-2/">La Red</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_3739"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_3739"><ul class="">
+
+    <li class="header__nav_item  red menu-item menu-item-type-post_type menu-item-object-page menu-item-1192   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/nos-apoyan/">Colaboradores</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  big yellow menu-item menu-item-type-post_type menu-item-object-page menu-item-5146   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/empresario-2/">Empresario</a></span>
+</li><li class="header__nav_item  big blue separator menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-5127   accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/emprendedor-2/">Emprendedor</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_5127"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_5127"><ul class="">
+
+    <li class="header__nav_item  blue menu-item menu-item-type-post_type menu-item-object-page menu-item-792   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/criterios-de-elegibilidad/">Criterios de elegibilidad</a></span>    </li><li class="header__nav_item  blue menu-item menu-item-type-post_type menu-item-object-page menu-item-6269   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/proceso-de-seleccion/">Proceso de selección</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-84   accordion-item header__nav_item--parent nav_item--parent"><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/quienes-somos/">Nosotros</a><button class="btn_accordion btn_accordion--plus" data-toggle="collapse" data-target="#collapse_84"></button></span><div class="submenu submenu_lvl_0 collapse" id="collapse_84"><ul class="">
+
+    <li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-6559   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/quienes-somos/organos-de-gobierno/">Organo de Gobierno</a></span>    </li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-81   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/empresario/">Participar</a></span>
+</li></ul></div>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-90   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/contacto/">Contacto</a></span>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-9234   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/actualidad/">Actualidad</a></span>
+</li><li class="header__nav_item  menu-item menu-item-type-post_type menu-item-object-page menu-item-12304   "><span class="header__nav_item_line  "><a href="https://www.netmentora.org/madrid/transparencia/">Transparencia</a></span>
+</li></ul>
+</div>
 
 <script>
   let entidadesEmprendedores = [];
@@ -143,7 +253,7 @@
   async function cargarDatos() {
     try {
       const respuesta = await fetch('/directorio.json');
-      if (!response.ok) throw new Error("Base de datos no encontrada.");
+      if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
       procesarDatos(await respuesta.json());
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
@@ -171,7 +281,7 @@
               if (anio && anio !== 'NaN') dbAnios.add(anio);
           }
 
-          // RECONCILIACIÓN EN CALIENTE: Buscar mentores asignados escaneando los proyectosMentorizados de la red de socios
+          // RECONCILIACIÓN EN CALIENTE: Buscar mentores asignados
           const mentoresReconciliados = rawPersonasSocias.filter(socio => {
               const proyectosSocio = extraerArray(socio.proyectosMentorizados);
               return proyectosSocio.some(p => p.toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
@@ -190,7 +300,6 @@
           };
       });
 
-      // Rellenar controles UI ordenados
       [...dbSectores].sort().forEach(s => selectSector.insertAdjacentHTML('beforeend', `<option value="${s}">${s}</option>`));
       [...dbAnios].sort((a,b) => b - a).forEach(a => selectAnio.insertAdjacentHTML('beforeend', `<option value="${a}">${a}</option>`));
 
@@ -237,7 +346,6 @@
           
           let htmlMiembros = '<div class="miembros-list">';
           
-          // Renderizado de mentores reconciliados en caliente
           if(entidad.mentores.length > 0) {
              htmlMiembros += `<div class="mentores-wrapper"><strong>Mentores de red asignados:</strong> ${entidad.mentores.join(', ')}</div>`;
           }
