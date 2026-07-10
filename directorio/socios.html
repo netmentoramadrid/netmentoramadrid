@@ -16,9 +16,11 @@
         .card-entidad { position: relative; background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
         .card-entidad:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         
-        /* Ribete de Empresa Premiada */
+        /* Ribetes Múltiples */
         .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 110px; height: 110px; overflow: hidden; z-index: 10; pointer-events: none;}
-        .ribbon { position: absolute; top: 22px; right: -28px; background: var(--dir-accent); color: white; padding: 4px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: 0.5px; text-align: center;}
+        .ribbon { position: absolute; top: 22px; right: -28px; padding: 4px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.2); letter-spacing: 0.5px; text-align: center; color: white;}
+        .ribbon-accent { background: var(--dir-accent); }
+        .ribbon-purple { background: #7c3aed; } /* Color para Fundadores */
 
         .card-header { padding: 25px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 20px; align-items: center; position: relative; }
         .card-header.is-socia { border-top: 4px solid var(--dir-primary); }
@@ -27,7 +29,8 @@
         .entidad-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dir-border-light); flex-shrink: 0; background: white; }
         .entidad-info { flex-grow: 1; }
         .entidad-nombre { margin: 0 0 4px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
-        .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: inline-block; margin-top: 2px; }
+        .entidad-sector { font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500; display: block; margin-bottom: 2px; }
+        .entidad-fecha { font-size: 0.75rem; color: var(--dir-primary); font-weight: bold; display: block; margin-top: 4px;}
 
         .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
         .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light); }
@@ -41,6 +44,10 @@
         .badge-rol { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: #475569; font-weight: 500;}
         .badge-alumni { background: #fef08a; color: #854d0e; }
         
+        /* Enlaces interactivos Modales */
+        .link-modal { cursor: pointer; color: #0284c7; text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s; }
+        .link-modal:hover { color: #0369a1; }
+        
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
         .card-footer { padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end; }
@@ -48,6 +55,15 @@
         .btn-web:hover { color: var(--dir-accent); }
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
+
+        /* Estilos del Modal (Popup) */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.7); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: transparent; width: 100%; max-width: 450px; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-close { position: absolute; top: -15px; right: -15px; background: white; border: 2px solid var(--dir-border-light); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 100; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center; color: var(--dir-text-dark); transition: background 0.2s;}
+        .modal-close:hover { background: #f1f5f9; }
+        #modal-body .card-entidad { margin: 0; pointer-events: auto; }
     </style>
 </head>
 <body>
@@ -72,9 +88,18 @@
     </div>
 </main>
 
+<!-- El contenedor del Popup Modal -->
+<div id="modal-directorio" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" onclick="cerrarModal()">✕</button>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
 <!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
 
 <script>
+  let datosGlobalesBrutos = []; // Guarda el JSON puro para cruces en el Modal
   let entidadesSocios = []; 
   let personasPlanas = [];  
   
@@ -91,16 +116,24 @@
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
-  // Algoritmo de ponderación léxica para cargos
+  // Motor de Jerarquía Directiva
+  function obtenerPesoCargoDirectivo(cargoStr) {
+      if (!cargoStr) return 99;
+      const c = cargoStr.toLowerCase();
+      const topTier = ['ceo', 'director general', 'general manager', 'consejero delegado', 'presidente', 'country manager', 'founder', 'fundador', 'co-founder', 'cofounder', 'board member', 'socio'];
+      for (let i = 0; i < topTier.length; i++) { if (c.includes(topTier[i])) return 1; }
+      if (c.includes('director') || c.includes('head') || c.includes('chief') || c.includes('vp')) return 2;
+      if (c.includes('manager') || c.includes('responsable') || c.includes('lead')) return 3;
+      return 10;
+  }
+
+  // Motor Lexico para Cargos Internos (Junta y Grupos)
   function obtenerPesoCargo(cargoStr, filtroActivo) {
-      if (!cargoStr) return 99; // Sin cargo al fondo
+      if (!cargoStr) return 99;
       const fragmentos = cargoStr.split('|').map(s => s.trim().toLowerCase());
       const filtro = filtroActivo.toLowerCase();
-      
-      // Aisla el trozo de cargo que coincide con el grupo que estamos mirando
       let fragRelevante = fragmentos.find(f => f.includes(filtro) || filtro.split(' ').some(w => w.length > 4 && f.includes(w)));
-      if (!fragRelevante) fragRelevante = cargoStr.toLowerCase(); // Fallback
-
+      if (!fragRelevante) fragRelevante = cargoStr.toLowerCase();
       if (fragRelevante.includes('president')) return 1;
       if (fragRelevante.includes('vicepresident')) return 2;
       if (fragRelevante.includes('tesorer') || fragRelevante.includes('secretari')) return 3;
@@ -113,7 +146,8 @@
     try {
       const respuesta = await fetch('/directorio/directorio.json');
       if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
-      procesarDatos(await respuesta.json());
+      datosGlobalesBrutos = await respuesta.json();
+      procesarDatos(datosGlobalesBrutos);
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
@@ -136,11 +170,15 @@
           );
       });
 
+      const empresasFundadorasCore = ['campofrio', 'campofrío', 'alcampo', 'atrevia', 'delaviuda'];
+
       entidadesSocios = rawEmpresasSocias.map(emp => {
           if(emp.sector) dbSectores.add(emp.sector.trim());
           const miembros = rawPersonasSocias.filter(p => (p.empresaVinculada || '').toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
           miembros.forEach(m => { extraerArray(m.roles).forEach(r => dbRoles.add(r.trim())); });
           
+          const isFundadora = emp.isFundador || empresasFundadorasCore.includes((emp.nombre || '').toLowerCase().trim());
+
           return {
               id_entidad: 'soc_emp_' + emp.id.toString(),
               is_empresa: true,
@@ -148,8 +186,10 @@
               sector: emp.sector,
               logo: emp.logo,
               web: emp.web,
+              socioDesde: emp.socioDesde || '',
+              isFundadora: isFundadora,
               miembros: miembros,
-              isAlumniEntity: miembros.some(m => m.isAlumni) // Para poner el ribete si aplica
+              isAlumniEntity: miembros.some(m => m.isAlumni)
           };
       });
 
@@ -165,6 +205,7 @@
               sector: '', 
               foto: pf.foto,
               web: '', 
+              socioDesde: pf.socioDesde || '',
               miembros: [pf]
           });
       });
@@ -191,7 +232,7 @@
               if (tipo === 'empresas' && !p.empresaVinculada) return false;
               if (tipo === 'personas' && p.empresaVinculada) return false;
               if (!extraerArray(p.roles).includes(rol)) return false;
-              if (sector !== 'todos' && p.empresaSector !== sector) return false; // Filtro estricto
+              if (sector !== 'todos' && p.empresaSector !== sector) return false;
               
               if (texto !== '') {
                   const strBusqueda = `${p.nombre} ${p.cargo||''} ${p.cargoInterno||''} ${p.empresaVinculada||''} ${extraerArray(p.roles).join(' ')}`.toLowerCase();
@@ -200,7 +241,6 @@
               return true;
           });
 
-          // ORDENAMIENTO MILITAR INTELIGENTE
           personasFiltradas.sort((a, b) => {
               const pesoA = obtenerPesoCargo(a.cargoInterno, rol);
               const pesoB = obtenerPesoCargo(b.cargoInterno, rol);
@@ -214,7 +254,7 @@
           entidadesSocios.forEach(entidad => {
               if (tipo === 'empresas' && !entidad.is_empresa) return;
               if (tipo === 'personas' && entidad.is_empresa) return;
-              if (sector !== 'todos' && entidad.sector !== sector) return; // Filtro estricto
+              if (sector !== 'todos' && entidad.sector !== sector) return;
 
               if (texto !== '') {
                   const matchEmpresa = `${entidad.nombre} ${entidad.sector || ''}`.toLowerCase().includes(texto);
@@ -228,7 +268,6 @@
               }
           });
 
-          // ORDENAMIENTO ALFABÉTICO CORPORATIVO
           entidadesFiltradas.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
           pintarGridAgrupado(entidadesFiltradas);
       }
@@ -244,18 +283,30 @@
           const card = document.createElement('article');
           card.className = 'card-entidad';
           
-          const ribbonHtml = entidad.isAlumniEntity ? `<div class="ribbon-wrapper"><div class="ribbon">Empresa Premiada</div></div>` : '';
+          let ribbonHtml = '';
+          if (entidad.isFundadora) {
+              ribbonHtml = `<div class="ribbon-wrapper"><div class="ribbon ribbon-purple">Fundador</div></div>`;
+          } else if (entidad.isAlumniEntity) {
+              ribbonHtml = `<div class="ribbon-wrapper"><div class="ribbon ribbon-accent">Empresa Premiada</div></div>`;
+          }
+
           const claseHeader = entidad.is_empresa ? 'is-socia' : 'is-fisica';
           const imagenHtml = entidad.is_empresa 
               ? `<img src="${entidad.logo}" class="entidad-logo" onerror="this.style.display='none'">`
               : `<img src="${entidad.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
 
           const sectorHtml = entidad.sector ? `<span class="entidad-sector">${entidad.sector}</span>` : '';
+          const socioDesdeHtml = entidad.socioDesde ? `<span class="entidad-fecha">Socio desde ${entidad.socioDesde}</span>` : '';
 
           let htmlMiembros = '<div class="miembros-list">';
           
-          // Orden alfabético interno de los miembros en la empresa
-          const miembrosOrdenados = [...entidad.miembros].sort((a,b) => (a.nombre||'').localeCompare(b.nombre||''));
+          // ORDENAMIENTO INTERNO DE LOS MIEMBROS POR CARGO CORPORATIVO
+          const miembrosOrdenados = [...entidad.miembros].sort((a,b) => {
+              const pesoA = obtenerPesoCargoDirectivo(a.cargo);
+              const pesoB = obtenerPesoCargoDirectivo(b.cargo);
+              if (pesoA !== pesoB) return pesoA - pesoB;
+              return (a.nombre||'').localeCompare(b.nombre||'');
+          });
 
           miembrosOrdenados.forEach(m => {
               let badgesHTML = '';
@@ -263,7 +314,9 @@
               extraerArray(m.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
               const mentorizados = extraerArray(m.proyectosMentorizados);
-              const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
+              // Inyección del enlace para abrir Modal
+              const mentorizaLinks = mentorizados.map(p => `<span class="link-modal" onclick="abrirModalProyecto('${p.replace(/'/g, "\\'")}')">${p}</span>`).join(', ');
+              const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${mentorizaLinks}</div>` : '';
 
               const htmlFotoPersona = (entidad.is_empresa && m.foto) 
                 ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
@@ -297,6 +350,7 @@
                   <div class="entidad-info">
                       <h3 class="entidad-nombre">${entidad.nombre}</h3>
                       ${sectorHtml}
+                      ${socioDesdeHtml}
                   </div>
               </div>
               ${htmlMiembros}
@@ -317,7 +371,7 @@
           const card = document.createElement('article');
           card.className = 'card-entidad';
           
-          const ribbonHtml = p.isAlumni ? `<div class="ribbon-wrapper"><div class="ribbon">Empresa Premiada</div></div>` : '';
+          const ribbonHtml = p.isAlumni ? `<div class="ribbon-wrapper"><div class="ribbon ribbon-accent">Empresa Premiada</div></div>` : '';
           const imagenHtml = `<img src="${p.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
           const htmlCargoInterno = p.cargoInterno ? `<p style="font-size:0.9rem; color:#00B159; font-weight:700; margin:4px 0 0 0;">${p.cargoInterno}</p>` : '';
           
@@ -342,7 +396,8 @@
           extraerArray(p.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
           const mentorizados = extraerArray(p.proyectosMentorizados);
-          const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
+          const mentorizaLinks = mentorizados.map(proj => `<span class="link-modal" onclick="abrirModalProyecto('${proj.replace(/'/g, "\\'")}')">${proj}</span>`).join(', ');
+          const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${mentorizaLinks}</div>` : '';
           
           const htmlLinkedin = p.linkedin ? `<div style="margin-top:10px;"><a href="${p.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a></div>` : '';
           const footerHTML = p.empresaWeb ? `<div class="card-footer"><a href="${p.empresaWeb}" target="_blank" class="btn-web">Web de la empresa ↗</a></div>` : '';
@@ -367,6 +422,68 @@
           fragment.appendChild(card);
       });
       contenedorSocios.appendChild(fragment);
+  }
+
+  // =========================================
+  // SISTEMA DE VENTANAS EMERGENTES (MODAL)
+  // =========================================
+  const modalOverlay = document.getElementById('modal-directorio');
+  const modalBody = document.getElementById('modal-body');
+
+  function cerrarModal() { modalOverlay.classList.remove('active'); }
+  modalOverlay.addEventListener('click', (e) => { if(e.target === modalOverlay) cerrarModal(); });
+
+  function abrirModalProyecto(nombreProyectoRaw) {
+      const nombre = nombreProyectoRaw.toLowerCase().trim();
+      const rawPremiadas = datosGlobalesBrutos.filter(d => d.tipo === 'empresa_premiada');
+      const rawEmprendedores = datosGlobalesBrutos.filter(d => d.tipo === 'emprendedor');
+      
+      const proyecto = rawPremiadas.find(p => (p.nombre||'').toLowerCase().trim() === nombre);
+      
+      if (!proyecto) {
+          modalBody.innerHTML = `<div style="padding:40px; background:white; border-radius:12px; text-align:center;">El proyecto no ha sido encontrado en la base de datos pública.</div>`;
+          modalOverlay.classList.add('active');
+          return;
+      }
+
+      const miembros = rawEmprendedores.filter(m => (m.empresaVinculada||'').toLowerCase().trim() === nombre);
+      
+      let htmlMiembros = '<div class="miembros-list" style="max-height:40vh; overflow-y:auto;">';
+      miembros.forEach(m => {
+          const mFoto = m.foto ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` : `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" class="miembro-foto">`;
+          htmlMiembros += `
+              <div class="miembro-item">
+                  ${mFoto}
+                  <div class="miembro-datos">
+                      <h4 class="miembro-nombre">${m.nombre}</h4>
+                      ${m.cargo ? `<p class="miembro-cargo">${m.cargo}</p>` : ''}
+                      ${m.linkedin ? `<a href="${m.linkedin}" target="_blank" class="linkedin-link">LinkedIn ↗</a>` : ''}
+                  </div>
+              </div>
+          `;
+      });
+      htmlMiembros += '</div>';
+
+      const yearStr = proyecto.fechaComite ? new Date(proyecto.fechaComite).getFullYear() : (proyecto.fechaComite||'').substring(0,4);
+      
+      modalBody.innerHTML = `
+          <article class="card-entidad" style="box-shadow:none;">
+              <div class="card-header" style="border-top:4px solid var(--dir-accent); flex-direction:column; align-items:flex-start; gap:10px;">
+                  <div style="display:flex; gap:20px; align-items:center; width:100%;">
+                      <img src="${proyecto.logo}" class="entidad-logo" onerror="this.style.display='none'">
+                      <div class="entidad-info">
+                          <h3 class="entidad-nombre">${proyecto.nombre}</h3>
+                          ${proyecto.sector ? `<span class="entidad-sector">${proyecto.sector}</span>` : ''}
+                          ${yearStr && yearStr !== 'NaN' ? `<span class="entidad-fecha" style="color:var(--dir-accent)">Premiado en ${yearStr}</span>` : ''}
+                      </div>
+                  </div>
+                  ${proyecto.descripcion ? `<p class="entidad-descripcion" style="margin:5px 0 0 0; font-size:0.85rem;">${proyecto.descripcion}</p>` : ''}
+              </div>
+              ${htmlMiembros}
+              ${proyecto.web ? `<div class="card-footer"><a href="${proyecto.web}" target="_blank" class="btn-web" style="color:var(--dir-accent)">Visitar web del proyecto ↗</a></div>` : ''}
+          </article>
+      `;
+      modalOverlay.classList.add('active');
   }
 
   inputBuscador.addEventListener('input', renderizarInterfaces);
