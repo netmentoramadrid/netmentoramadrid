@@ -29,7 +29,7 @@
         .panel-controles input, .panel-controles select {
             padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
             font-size: 15px; flex: 1; min-width: 200px; outline: none;
-            box-sizing: border-box; background-color: #fff; color: var(--dir-text-dark);
+            box-sizing: border-box; background-color: #fff;
         }
         .panel-controles input:focus, .panel-controles select:focus {
             border-color: var(--dir-accent); box-shadow: 0 0 0 3px rgba(0,177,89,0.1);
@@ -59,7 +59,7 @@
         .ribbon-blue { background: #2563eb; } 
         .ribbon-gold { background: #ca8a04; } 
 
-        .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; flex-direction: column; items: flex-start; gap: 12px; position: relative; border-top: 5px solid var(--dir-accent); }
+        .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; position: relative; border-top: 5px solid var(--dir-accent); }
         .header-main-info { display: flex; gap: 20px; align-items: center; width: 100%; }
 
         .entidad-logo { width: 90px; height: 90px; border-radius: 12px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 8px; flex-shrink: 0; }
@@ -94,13 +94,15 @@
         /* MODAL CENTRAL UX 2026 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.15s ease-out; padding: 20px; box-sizing: border-box; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; width: 100%; max-width: 420px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
+        .modal-content { background: white; width: 100%; max-width: 480px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close-btn { position: absolute; top: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.1s;}
         .modal-close-btn:hover { background: #f1f5f9; }
     </style>
 </head>
 <body>
+
+<!-- INSERTA TU HEADER DE WORDPRESS AQUÍ -->
 
 <main class="directorio-contenedor">
     <div class="panel-controles">
@@ -123,6 +125,8 @@
         <div id="modal-body"></div>
     </div>
 </div>
+
+<!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
 
 <script>
   let datosGlobalesBrutos = [];
@@ -150,7 +154,7 @@
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
       console.error(error);
-      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center; padding:25px;">Error al cargar el histórico de empresas premiadas.</p>`;
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center; padding: 25px;">Error al cargar el histórico de empresas premiadas.</p>`;
     }
   }
 
@@ -178,23 +182,13 @@
               return proyectosSocio.some(p => p.toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
           }).map(m => {
               const mentorEmp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (m.empresaVinculada||'').toLowerCase().trim());
-              
-              const isAlumniMentor = rawPersonasEmprendedoras.some(pEmp => 
-                  (pEmp.nombre || '').toLowerCase().trim() === (m.nombre || '').toLowerCase().trim() &&
-                  (pEmp.empresaVinculada || '').toLowerCase().trim() === (m.empresaVinculada || '').toLowerCase().trim()
-              );
-
-              return { nombre: m.nombre, foto: m.foto, empresa: m.empresaVinculada, logo: mentorEmp ? mentorEmp.logo : null, isAlumni: isAlumniMentor };
+              return { nombre: m.nombre, foto: m.foto, empresa: m.empresaVinculada, logo: mentorEmp ? mentorEmp.logo : null };
           });
 
           const isSocia = rawEmpresasSocias.some(es => (es.nombre||'').toLowerCase().trim() === (emp.nombre||'').toLowerCase().trim());
           
-          // DETECTOR DE ESTADO PARA EXTRAER EL EXIT DESDE TU COLUMNA DE SHAREPOINT
-          let statusExit = false;
-          if (emp.Estado || emp.estado) {
-              const valEstado = (emp.Estado || emp.estado).toString().toLowerCase().trim();
-              if (valEstado === 'exit') statusExit = true;
-          }
+          // LECTURA DIRECTA DEL BOOLEANO DE EXIT
+          const statusExit = (emp.isExit === true || emp.isExit === "true");
 
           return {
               id_entidad: 'emp_prem_' + emp.id.toString(),
@@ -240,7 +234,7 @@
 
   function pintarGrid(datos) {
       contenedorEmprendedores.innerHTML = '';
-      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay registros de empresas bajo estos filtros.</p>'; return; }
+      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay empresas que coincidan con la búsqueda.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -268,8 +262,8 @@
              
              entidad.mentores.forEach(mentor => {
                  const fotoUrl = mentor.foto ? mentor.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
-                 const mFoto = `<img src="${fotoUrl}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
-                 const mEmpresa = mentor.empresa ? ` <span style="color:#64748b; font-weight:500;">(${mentor.empresa})</span>` : '';
+                 const mFoto = `<img src="${fotoUrl}" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
+                 const mEmpresa = mentor.empresa ? `<p style="font-size:0.75rem; color:#64748b; margin:0;">${mentor.empresa}</p>` : '';
                  const mLogo = mentor.logo ? `<img src="${mentor.logo}" style="height:24px; max-width:60px; object-fit:contain; margin-left:auto;" onerror="this.style.display='none'">` : '';
                  
                  listaMentores += `
@@ -335,6 +329,9 @@
       contenedorEmprendedores.appendChild(fragment);
   }
 
+  // ==========================================
+  // MODAL CENTRAL (ESTANCO Y ROBUSTO)
+  // ==========================================
   function abrirModalMentor(e) {
       e.preventDefault(); e.stopPropagation();
       const nombre = e.currentTarget.getAttribute('data-name');
@@ -375,7 +372,7 @@
       
       let htmlEmpresa = '';
       if (socio.empresaVinculada) {
-          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:40px; height:40px; object-fit:contain; border-radius:6px; border:1px solid #cbd5e1; background:white;" onerror="this.style.display='none'">` : '';
+          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:45px; height:45px; object-fit:contain; border-radius:6px; border:1px solid #cbd5e1; background:white;" onerror="this.style.display='none'">` : '';
           htmlEmpresa = `
               <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; padding:12px; background:#f1f5f9; border-radius:10px; border:1px solid #e2e8f0; width:100%; box-sizing:border-box;">
                   ${htmlLogoEmpresa}
@@ -393,10 +390,10 @@
           (pEmp.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
       );
 
-      if (isAlumni) badgesHTML += `<span style="font-size:0.75rem; padding:4px 10px; border-radius:6px; background:#fef08a; color:#854d0e; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;">Emprendedor premiado</span>`;
-      extraerArray(socio.roles).forEach(r => badgesHTML += `<span style="font-size:0.7rem; padding:4px 10px; border-radius:6px; background:#e2e8f0; color:#475569; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;">${r}</span>`);
+      if (isAlumni) badgesHTML += `<span style="font-size:0.75rem; padding:4px 10px; border-radius:6px; background:#fef08a; color:#854d0e; font-weight:700; text-transform:uppercase; letter-spacing:0.02em;">Emprendedor premiado</span>`;
+      extraerArray(socio.roles).forEach(r => badgesHTML += `<span style="font-size:0.7rem; padding:4px 10px; border-radius:6px; background:#e2e8f0; color:#475569; font-weight:700; text-transform:uppercase; letter-spacing:0.02em;">${r}</span>`);
 
-      const htmlLinkedin = socio.linkedin ? `<a href="${socio.linkedin}" target="_blank" style="font-size:0.85rem; color:#0a66c2; text-decoration:none; font-weight:700; margin-top:20px; display:inline-block; padding:8px 16px; border:1px solid #cbd5e1; border-radius:8px; transition:background 0.2s;">Ver perfil en LinkedIn ↗</a>` : '';
+      const htmlLinkedin = socio.linkedin ? `<a href="${socio.linkedin}" target="_blank" style="font-size:0.9rem; color:#0a66c2; text-decoration:none; font-weight:700; margin-top:20px; display:inline-block; padding:8px 16px; border:1px solid #cbd5e1; border-radius:8px; transition:background 0.2s;">Ver perfil en LinkedIn ↗</a>` : '';
 
       document.getElementById('modal-body').innerHTML = `
           <div style="border-top:5px solid #94a3b8; display:flex; flex-direction:column; align-items:center; text-align:center; padding:40px 30px 25px 30px;">
