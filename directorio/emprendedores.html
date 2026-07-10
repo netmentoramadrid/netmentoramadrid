@@ -252,7 +252,7 @@
 
   async function cargarDatos() {
     try {
-      const respuesta = await fetch('/directorio.json');
+      const respuesta = await fetch('/directorio/directorio.json');
       if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
       procesarDatos(await respuesta.json());
       document.getElementById('loading').classList.add('hidden');
