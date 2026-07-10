@@ -54,8 +54,9 @@
             transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
         }
         
-        .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 120px; height: 120px; overflow: hidden; z-index: 10; pointer-events: none;}
-        .ribbon { position: absolute; top: 25px; right: -30px; padding: 5px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white;}
+        /* Ribetes Geométricos Blindados */
+        .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 110px; height: 110px; overflow: hidden; z-index: 10; pointer-events: none; border-radius: 0 16px 0 0;}
+        .ribbon { position: absolute; top: 20px; right: -35px; width: 160px; padding: 6px 0; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white; display: block;}
         .ribbon-accent { background: var(--dir-accent); }
         .ribbon-founder { background: #7c3aed; } 
 
@@ -94,7 +95,6 @@
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
 
-        /* MODAL CENTRAL UX 2026 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.15s ease-out; padding: 20px; box-sizing: border-box; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content { background: white; width: 100%; max-width: 480px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
@@ -104,8 +104,6 @@
     </style>
 </head>
 <body>
-
-<!-- INSERTA TU HEADER DE WORDPRESS AQUÍ -->
 
 <main class="directorio-contenedor">
     <div class="panel-controles">
@@ -138,8 +136,6 @@
         <div id="modal-body"></div>
     </div>
 </div>
-
-<!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
 
 <script>
   let datosGlobalesBrutos = []; 
@@ -182,8 +178,6 @@
 
       if (fragRelevante.includes('vicepresident')) return 2;
       if (fragRelevante.includes('president') || fragRelevante.includes('responsable') || fragRelevante.includes('líder') || fragRelevante.includes('lider') || fragRelevante.includes('coordinador')) return 1;
-      
-      // EL BUG DE DANIEL GÓMEZ RESUELTO: Separados estricto
       if (fragRelevante.includes('tesorer')) return 3;
       if (fragRelevante.includes('secretari')) return 4;
       if (fragRelevante.includes('vocal')) return 5;
@@ -494,9 +488,6 @@
       contenedorSocios.appendChild(fragment);
   }
 
-  // ==========================================
-  // MODAL CENTRAL INSTANTÁNEO 
-  // ==========================================
   function abrirModal(e) {
       e.preventDefault(); e.stopPropagation();
       const nombre = e.currentTarget.getAttribute('data-name');
