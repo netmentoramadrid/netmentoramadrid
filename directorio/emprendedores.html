@@ -29,7 +29,7 @@
         .panel-controles input, .panel-controles select {
             padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
             font-size: 15px; flex: 1; min-width: 200px; outline: none;
-            box-sizing: border-box; background-color: #fff;
+            box-sizing: border-box; background-color: #fff; color: var(--dir-text-dark);
         }
         .panel-controles input:focus, .panel-controles select:focus {
             border-color: var(--dir-accent); box-shadow: 0 0 0 3px rgba(0,177,89,0.1);
@@ -54,8 +54,9 @@
             transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
         }
         
-        .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 120px; height: 120px; overflow: hidden; z-index: 10; pointer-events: none;}
-        .ribbon { position: absolute; top: 25px; right: -30px; padding: 5px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white;}
+        /* Ribetes Geométricos Blindados */
+        .ribbon-wrapper { position: absolute; top: 0; right: 0; width: 110px; height: 110px; overflow: hidden; z-index: 10; pointer-events: none; border-radius: 0 16px 0 0;}
+        .ribbon { position: absolute; top: 20px; right: -35px; width: 160px; padding: 6px 0; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white; display: block;}
         .ribbon-blue { background: #2563eb; } 
         .ribbon-gold { background: #ca8a04; } 
 
@@ -94,7 +95,7 @@
         /* MODAL CENTRAL UX 2026 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.15s ease-out; padding: 20px; box-sizing: border-box; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; width: 100%; max-width: 480px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
+        .modal-content { background: white; width: 100%; max-width: 420px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
         .modal-overlay.active .modal-content { transform: scale(1); }
         .modal-close-btn { position: absolute; top: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.1s;}
         .modal-close-btn:hover { background: #f1f5f9; }
@@ -144,6 +145,16 @@
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
+  const parseBooleano = (val) => {
+      if (!val) return false;
+      if (typeof val === 'object' && val.Value !== undefined) {
+          const v = val.Value.toString().toLowerCase().trim();
+          return v === '1' || v === 'true' || v === 'yes' || v === 'sí' || v === 'si';
+      }
+      const s = val.toString().toLowerCase().trim();
+      return s === '1' || s === 'true' || s === 'yes' || s === 'sí' || s === 'si';
+  };
+
   async function cargarDatos() {
     try {
       const respuesta = await fetch('/directorio/directorio.json');
@@ -187,8 +198,11 @@
 
           const isSocia = rawEmpresasSocias.some(es => (es.nombre||'').toLowerCase().trim() === (emp.nombre||'').toLowerCase().trim());
           
-          // LECTURA DIRECTA DEL BOOLEANO DE EXIT
-          const statusExit = (emp.isExit === true || emp.isExit === "true");
+          let statusExit = false;
+          if (emp.Estado || emp.estado || emp.isExit) {
+              const valEstado = (emp.Estado || emp.estado || emp.isExit).toString().toLowerCase().trim();
+              if (valEstado === 'exit' || valEstado === 'true' || valEstado === '1') statusExit = true;
+          }
 
           return {
               id_entidad: 'emp_prem_' + emp.id.toString(),
@@ -234,7 +248,7 @@
 
   function pintarGrid(datos) {
       contenedorEmprendedores.innerHTML = '';
-      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay empresas que coincidan con la búsqueda.</p>'; return; }
+      if (datos.length === 0) { contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay registros de empresas bajo estos filtros.</p>'; return; }
 
       const fragment = document.createDocumentFragment();
 
@@ -329,9 +343,6 @@
       contenedorEmprendedores.appendChild(fragment);
   }
 
-  // ==========================================
-  // MODAL CENTRAL (ESTANCO Y ROBUSTO)
-  // ==========================================
   function abrirModalMentor(e) {
       e.preventDefault(); e.stopPropagation();
       const nombre = e.currentTarget.getAttribute('data-name');
@@ -372,7 +383,7 @@
       
       let htmlEmpresa = '';
       if (socio.empresaVinculada) {
-          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:45px; height:45px; object-fit:contain; border-radius:6px; border:1px solid #cbd5e1; background:white;" onerror="this.style.display='none'">` : '';
+          const htmlLogoEmpresa = emp && emp.logo ? `<img src="${emp.logo}" style="width:40px; height:40px; object-fit:contain; border-radius:6px; border:1px solid #cbd5e1; background:white;" onerror="this.style.display='none'">` : '';
           htmlEmpresa = `
               <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; padding:12px; background:#f1f5f9; border-radius:10px; border:1px solid #e2e8f0; width:100%; box-sizing:border-box;">
                   ${htmlLogoEmpresa}
