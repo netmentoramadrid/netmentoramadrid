@@ -339,8 +339,8 @@
               const matchRol = extraerArray(p.roles).includes(rol);
               if (!matchRol) return false;
               
-              const matchSector = sector === 'todos' || p.empresaSector === sector;
-              if (!matchSector && p.empresaVinculada) return false; 
+              // Exclusión estricta de sector arreglada
+              if (sector !== 'todos' && p.empresaSector !== sector) return false;
               
               if (texto !== '') {
                   const strBusqueda = `${p.nombre} ${p.cargo||''} ${p.cargoInterno||''} ${p.empresaVinculada||''} ${extraerArray(p.roles).join(' ')}`.toLowerCase();
@@ -352,7 +352,8 @@
       } else {
           const entidadesFiltradas = [];
           entidadesSocios.forEach(entidad => {
-              if (sector !== 'todos' && entidad.sector !== sector && entidad.is_empresa) return;
+              // Exclusión estricta de sector arreglada para la vista agrupada
+              if (sector !== 'todos' && entidad.sector !== sector) return;
 
               if (texto !== '') {
                   const matchEmpresa = `${entidad.nombre} ${entidad.sector || ''}`.toLowerCase().includes(texto);
@@ -389,20 +390,22 @@
           const claseHeader = entidad.is_empresa ? 'is-socia' : 'is-fisica';
           const imagenHtml = entidad.is_empresa 
               ? `<img src="${entidad.logo}" class="entidad-logo" onerror="this.style.display='none'">`
-              : `<img src="${entidad.foto}" class="entidad-avatar" onerror="this.src='https://via.placeholder.com/90/e2e8f0/64748b?text=👤'">`;
+              : `<img src="${entidad.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
 
           const sectorHtml = entidad.sector ? `<span class="entidad-sector">${entidad.sector}</span>` : '';
 
           let htmlMiembros = '<div class="miembros-list">';
           entidad.miembros.forEach(m => {
               let badgesHTML = '';
-              if (m.isAlumni) badgesHTML += `<span class="badge-rol badge-alumni">Alumni</span>`;
+              if (m.isAlumni) badgesHTML += `<span class="badge-rol badge-alumni">Antiguo emprendedor premiado</span>`;
               extraerArray(m.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
               const mentorizados = extraerArray(m.proyectosMentorizados);
               const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
 
-              const htmlFotoPersona = (entidad.is_empresa && m.foto) ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://via.placeholder.com/60/e2e8f0/64748b?text=👤'">` : '';
+              const htmlFotoPersona = (entidad.is_empresa && m.foto) 
+                ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
+                : (entidad.is_empresa ? `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" class="miembro-foto">` : '');
               
               const htmlCargoInterno = m.cargoInterno ? `<p style="font-size:0.8rem; color:#00B159; font-weight:600; margin:0 0 2px 0;">${m.cargoInterno}</p>` : '';
               const htmlCargo = m.cargo ? `<p class="miembro-cargo" style="margin:0 0 6px 0;">${m.cargo}</p>` : '';
@@ -454,7 +457,7 @@
           const card = document.createElement('article');
           card.className = 'card-entidad';
           
-          const imagenHtml = `<img src="${p.foto}" class="entidad-avatar" onerror="this.src='https://via.placeholder.com/90/e2e8f0/64748b?text=👤'">`;
+          const imagenHtml = `<img src="${p.foto}" class="entidad-avatar" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">`;
           
           const htmlCargoInterno = p.cargoInterno ? `<p style="font-size:0.9rem; color:#00B159; font-weight:700; margin:4px 0 0 0;">${p.cargoInterno}</p>` : '';
           
@@ -475,7 +478,7 @@
           }
           
           let badgesHTML = '';
-          if (p.isAlumni) badgesHTML += `<span class="badge-rol badge-alumni">Alumni</span>`;
+          if (p.isAlumni) badgesHTML += `<span class="badge-rol badge-alumni">Antiguo emprendedor premiado</span>`;
           extraerArray(p.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
           const mentorizados = extraerArray(p.proyectosMentorizados);
