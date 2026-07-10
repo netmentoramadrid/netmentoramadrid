@@ -48,7 +48,7 @@
         .card-entidad {
             position: relative; background: var(--dir-bg-card); border-radius: 16px; border: 1px solid var(--dir-border-light);
             box-shadow: 0 4px 12px rgba(15,23,42,0.03); display: flex; flex-direction: column; overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease-out;
         }
         .card-entidad:hover {
             transform: translateY(-4px); box-shadow: 0 12px 24px rgba(15,23,42,0.08);
@@ -57,7 +57,7 @@
         .ribbon-wrapper { position: absolute; top: -5px; right: -5px; width: 120px; height: 120px; overflow: hidden; z-index: 10; pointer-events: none;}
         .ribbon { position: absolute; top: 25px; right: -30px; padding: 5px 30px; transform: rotate(45deg); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.05em; text-align: center; color: white;}
         .ribbon-accent { background: var(--dir-accent); }
-        .ribbon-purple { background: #7c3aed; } 
+        .ribbon-founder { background: #7c3aed; } 
 
         .card-header { padding: 30px 20px 20px 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 20px; align-items: center; position: relative; }
         .card-header.is-socia { border-top: 5px solid var(--dir-primary); }
@@ -83,7 +83,7 @@
         .badge-rol { font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; background: #e2e8f0; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em;}
         .badge-alumni { background: #fef08a; color: #854d0e; }
         
-        .link-interactive-modal { position: relative; display: inline-block; color: #0284c7; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; cursor: pointer; }
+        .link-interactive-modal { position: relative; display: inline-block; color: #0284c7; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; cursor: pointer; transition: color 0.15s; }
         .link-interactive-modal:hover { color: #0369a1; }
         
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
@@ -94,13 +94,18 @@
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
 
-        .popover-container { position: fixed; z-index: 99999; background: white; border-radius: 16px; border: 1px solid var(--dir-border-light); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); width: 360px; pointer-events: none; opacity: 0; transform: scale(0.95); transition: opacity 0.15s ease, transform 0.15s ease; padding: 0; overflow: hidden; }
-        .popover-container.active { opacity: 1; transform: scale(1); pointer-events: auto; }
-        .popover-close-btn { position: absolute; top: 10px; right: 10px; background: white; border: 1px solid var(--dir-border-light); width: 28px; height: 26px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: var(--dir-text-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .popover-close-btn:hover { background: #f1f5f9; }
+        /* MODAL CENTRAL UX 2026 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.15s ease-out; padding: 20px; box-sizing: border-box; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; width: 100%; max-width: 480px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15); transform: scale(0.95); transition: transform 0.15s ease-out; position: relative; font-family: system-ui, -apple-system, sans-serif; color: #1e293b; overflow: hidden; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-close-btn { position: absolute; top: 15px; right: 15px; background: white; border: 1px solid #e2e8f0; width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 20; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.1s;}
+        .modal-close-btn:hover { background: #f1f5f9; }
     </style>
 </head>
 <body>
+
+<!-- INSERTA TU HEADER DE WORDPRESS AQUÍ -->
 
 <main class="directorio-contenedor">
     <div class="panel-controles">
@@ -119,7 +124,7 @@
         <select id="filtro-rol"><option value="todos">Roles internos: Todos</option></select>
     </div>
     
-    <div id="loading" class="estado-carga">Cargando Red de Socios...</div>
+    <div id="loading" class="estado-carga">Cargando Socios...</div>
 
     <div id="contenido-directorio" class="hidden">
         <h2 class="section-title">Socios</h2>
@@ -127,16 +132,19 @@
     </div>
 </main>
 
-<div id="popover-ecosistema" class="popover-container"></div>
+<div id="modal-ecosistema" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-btn" onclick="cerrarModal()">✕</button>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<!-- INSERTA TU FOOTER DE WORDPRESS AQUÍ -->
 
 <script>
   let datosGlobalesBrutos = []; 
   let entidadesSocios = []; 
   let personasPlanas = [];  
-  
-  const popover = document.getElementById('popover-ecosistema');
-  let popoverLocked = false;
-  let popoverActiveTarget = null;
 
   const inputBuscador = document.getElementById('buscador-texto');
   const selectTipo = document.getElementById('filtro-tipo');
@@ -152,24 +160,14 @@
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
-  // Motor Dinámico para destripar la OData de SharePoint en columnas de Opción
   const getOrdenBinario = (val) => {
       if (!val) return 0;
-      // Si SharePoint lo manda como objeto complejo (ej: {"Value": "1"})
-      if (typeof val === 'object' && val.Value !== undefined) {
-          return (val.Value === "1" || val.Value === 1) ? 1 : 0;
-      }
-      // Si SharePoint lo manda como un array de objetos (menos probable pero posible)
-      if (Array.isArray(val) && val.length > 0 && val[0].Value !== undefined) {
-          return (val[0].Value === "1" || val[0].Value === 1) ? 1 : 0;
-      }
-      // Si baja como texto o número primitivo
+      if (typeof val === 'object' && val.Value !== undefined) return (val.Value === "1" || val.Value === 1) ? 1 : 0;
+      if (Array.isArray(val) && val.length > 0 && val[0].Value !== undefined) return (val[0].Value === "1" || val[0].Value === 1) ? 1 : 0;
       if (val === 1 || val === "1" || val === true || val === "true") return 1;
-      
       return 0;
   };
 
-  // Motor de Ordenación Léxico por Fragmentos (Exclusivo para la vista filtrada por Roles)
   function obtenerPesoCargoInterno(cargoStr, filtroActivo) {
       if (!cargoStr) return 99;
       const fragmentos = cargoStr.split('|').map(s => s.trim().toLowerCase());
@@ -177,15 +175,19 @@
       
       let fragRelevante = fragmentos.find(f => f.includes(filtro));
       if (!fragRelevante) {
-          const palabrasFiltro = filtro.split(' ').filter(w => w.length > 4);
+          const palabrasFiltro = filtro.split(' ').filter(w => w.length > 3);
           fragRelevante = fragmentos.find(f => palabrasFiltro.some(w => f.includes(w)));
       }
-      if (!fragRelevante) return 90; 
+      if (!fragRelevante) fragRelevante = cargoStr.toLowerCase(); 
 
-      if (fragRelevante.includes('president') || fragRelevante.includes('responsable') || fragRelevante.includes('líder') || fragRelevante.includes('lider')) return 1;
       if (fragRelevante.includes('vicepresident')) return 2;
-      if (fragRelevante.includes('tesorer') || fragRelevante.includes('secretari')) return 3;
+      if (fragRelevante.includes('president') || fragRelevante.includes('responsable') || fragRelevante.includes('líder') || fragRelevante.includes('lider') || fragRelevante.includes('coordinador')) return 1;
+      
+      // EL BUG DE DANIEL GÓMEZ RESUELTO: Separados estricto
+      if (fragRelevante.includes('tesorer')) return 3;
+      if (fragRelevante.includes('secretari')) return 4;
       if (fragRelevante.includes('vocal')) return 5;
+      
       return 10;
   }
 
@@ -290,7 +292,6 @@
               return true;
           });
 
-          // ORDENACIÓN DE ROLES: Manda la jerarquía del fragmento, el resto alfabético
           personasFiltradas.sort((a, b) => {
               const pesoA = obtenerPesoCargoInterno(a.cargoInterno, rol);
               const pesoB = obtenerPesoCargoInterno(b.cargoInterno, rol);
@@ -350,7 +351,7 @@
           
           let ribbonHtml = '';
           if (entidad.isFundadora) {
-              ribbonHtml = `<div class="ribbon-wrapper"><div class="ribbon ribbon-purple">Fundador</div></div>`;
+              ribbonHtml = `<div class="ribbon-wrapper"><div class="ribbon ribbon-founder">Fundador</div></div>`;
           } else if (entidad.isAlumniEntity) {
               ribbonHtml = `<div class="ribbon-wrapper"><div class="ribbon ribbon-accent">Empresa Premiada</div></div>`;
           }
@@ -365,7 +366,6 @@
 
           let htmlMiembros = '<div class="miembros-list">';
           
-          // VISTA GENERAL INTERNA: Los 1 arriba, luego estrictamente alfabético de la A-Z
           const miembrosOrdenados = [...entidad.miembros].sort((a,b) => {
               const ordenA = getOrdenBinario(a.ordenDirectorio);
               const ordenB = getOrdenBinario(b.ordenDirectorio);
@@ -381,7 +381,7 @@
               const mentorizados = extraerArray(m.proyectosMentorizados);
               let mentorizaHTML = '';
               if (mentorizados.length > 0) {
-                  const links = mentorizados.map(p => `<span class="link-interactive-modal" data-type="proyecto" data-name="${p.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">${p}</span>`).join(', ');
+                  const links = mentorizados.map(p => `<span class="link-interactive-modal" data-name="${p.replace(/'/g, "&apos;")}" onclick="abrirModal(event)">${p}</span>`).join(', ');
                   mentorizaHTML = `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${links}</div>`;
               }
 
@@ -465,7 +465,7 @@
           const mentorizados = extraerArray(p.proyectosMentorizados);
           let mentorizaHTML = '';
           if (mentorizados.length > 0) {
-              const links = mentorizados.map(proj => `<span class="link-interactive-modal" data-type="proyecto" data-name="${proj.replace(/'/g, "&apos;")}" onmouseenter="handleLinkHover(event)" onmouseleave="handleLinkLeave(event)" onclick="handleLinkClick(event)">${proj}</span>`).join(', ');
+              const links = mentorizados.map(proj => `<span class="link-interactive-modal" data-name="${proj.replace(/'/g, "&apos;")}" onclick="abrirModal(event)">${proj}</span>`).join(', ');
               mentorizaHTML = `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:8px;"><strong>Mentoriza a:</strong> ${links}</div>`;
           }
           
@@ -494,58 +494,25 @@
       contenedorSocios.appendChild(fragment);
   }
 
-  function posicionarPopover(e) {
-      const rect = e.target.getBoundingClientRect();
-      const popoverWidth = 360;
-      let left = rect.left + window.scrollX + (rect.width / 2) - (popoverWidth / 2);
-      let top = rect.top + window.scrollY - 10;
-      
-      if (left < 10) left = 10;
-      if (left + popoverWidth > window.innerWidth) left = window.innerWidth - popoverWidth - 10;
-      
-      popover.style.left = `${left}px`;
-      popover.style.top = `${top}px`;
-      popover.style.transform = `translateY(-100%) scale(1)`;
+  // ==========================================
+  // MODAL CENTRAL INSTANTÁNEO 
+  // ==========================================
+  function abrirModal(e) {
+      e.preventDefault(); e.stopPropagation();
+      const nombre = e.currentTarget.getAttribute('data-name');
+      construirContenidoModal(nombre);
+      document.getElementById('modal-ecosistema').classList.add('active');
   }
 
-  function handleLinkHover(e) {
-      if (popoverLocked) return;
-      popoverActiveTarget = e.target;
-      const nombreProyecto = e.target.getAttribute('data-name');
-      construirContenidoPopover(nombreProyecto);
-      posicionarPopover(e);
-      popover.classList.add('active');
+  function cerrarModal() {
+      document.getElementById('modal-ecosistema').classList.remove('active');
   }
 
-  function handleLinkLeave(e) {
-      if (popoverLocked) return;
-      popover.classList.remove('active');
-      popoverActiveTarget = null;
-  }
-
-  function handleLinkClick(e) {
-      e.stopPropagation();
-      popoverLocked = true;
-      popoverActiveTarget = e.target;
-      const nombreProyecto = e.target.getAttribute('data-name');
-      construirContenidoPopover(nombreProyecto, true);
-      posicionarPopover(e);
-      popover.classList.add('active');
-  }
-
-  function cerrarPopoverManual() {
-      popoverLocked = false;
-      popover.classList.remove('active');
-      popoverActiveTarget = null;
-  }
-
-  document.addEventListener('click', (e) => {
-      if (popoverLocked && !popover.contains(e.target) && e.target !== popoverActiveTarget) {
-          cerrarPopoverManual();
-      }
+  document.getElementById('modal-ecosistema').addEventListener('click', (e) => {
+      if(e.target === document.getElementById('modal-ecosistema')) cerrarModal();
   });
 
-  function construirContenidoPopover(nombreProyectoRaw, incluirBotonCerrar = false) {
+  function construirContenidoModal(nombreProyectoRaw) {
       const nombre = nombreProyectoRaw.toLowerCase().trim();
       const rawPremiadas = datosGlobalesBrutos.filter(d => d.tipo === 'empresa_premiada');
       const rawEmprendedores = datosGlobalesBrutos.filter(d => d.tipo === 'emprendedor');
@@ -553,20 +520,20 @@
       const proyecto = rawPremiadas.find(p => (p.nombre||'').toLowerCase().trim() === nombre);
       
       if (!proyecto) {
-          popover.innerHTML = `<div style="padding:20px; background:white; font-size:0.85rem; text-align:center;">Ficha del proyecto no disponible.</div>`;
+          document.getElementById('modal-body').innerHTML = `<div style="padding:40px 20px; font-size:1rem; text-align:center;">Ficha del proyecto no disponible.</div>`;
           return;
       }
 
       const miembros = rawEmprendedores.filter(m => (m.empresaVinculada||'').toLowerCase().trim() === nombre);
-      let htmlMiembros = '<div class="miembros-list" style="padding:15px; background:#f8fafc; max-height:180px; overflow-y:auto;">';
+      let htmlMiembros = '<div class="miembros-list" style="padding:20px; background:#f8fafc; max-height:220px; overflow-y:auto;">';
       miembros.forEach(m => {
           const fotoUrl = m.foto ? m.foto : 'https://netmentoramadrid.vercel.app/fotos/desconocido.webp';
           htmlMiembros += `
-              <div class="miembro-item" style="margin-bottom:10px; padding-bottom:10px; gap:10px;">
-                  <img src="${fotoUrl}" style="width:40px; height:40px; border-radius:50%; object-fit:cover;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">
+              <div class="miembro-item" style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #e2e8f0; display:flex; gap:15px; align-items:center;">
+                  <img src="${fotoUrl}" style="width:45px; height:45px; border-radius:50%; object-fit:cover;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">
                   <div class="miembro-datos">
-                      <h4 class="miembro-nombre" style="font-size:0.9rem; margin:0 0 2px 0;">${m.nombre}</h4>
-                      ${m.cargo ? `<p class="miembro-cargo" style="font-size:0.75rem; margin:0;">${m.cargo}</p>` : ''}
+                      <h4 class="miembro-nombre" style="font-size:1rem; margin:0 0 2px 0;">${m.nombre}</h4>
+                      ${m.cargo ? `<p class="miembro-cargo" style="font-size:0.8rem; color:#64748b; margin:0;">${m.cargo}</p>` : ''}
                   </div>
               </div>
           `;
@@ -574,22 +541,19 @@
       htmlMiembros += '</div>';
 
       const yearStr = proyecto.fechaComite ? new Date(proyecto.fechaComite).getFullYear() : (proyecto.fechaComite||'').substring(0,4);
-      const closeBtn = incluirBotonCerrar ? `<button class="popover-close-btn" onclick="cerrarPopoverManual()">✕</button>` : '';
 
-      popover.innerHTML = `
-          ${closeBtn}
-          <article class="card-entidad" style="box-shadow:none; border:none; border-radius:0;">
-              <div class="card-header" style="border-top:4px solid var(--dir-accent); padding:15px; gap:12px;">
-                  <img src="${proyecto.logo}" style="width:55px; height:55px; object-fit:contain; border:1px solid var(--dir-border-light); border-radius:6px; background:white; padding:4px;" onerror="this.style.display='none'">
-                  <div class="entidad-info">
-                      <h3 class="entidad-nombre" style="font-size:1.05rem; margin:0 0 2px 0;">${proyecto.nombre}</h3>
-                      ${proyecto.sector ? `<span class="entidad-sector" style="font-size:0.7rem; color:var(--dir-text-muted);">${proyecto.sector}</span>` : ''}
-                      ${yearStr && yearStr !== 'NaN' ? `<span style="font-size:0.7rem; color:var(--dir-accent); font-weight:bold; display:block; margin-top:2px;">Premiado en ${yearStr}</span>` : ''}
-                  </div>
+      document.getElementById('modal-body').innerHTML = `
+          <div style="border-top:5px solid var(--dir-accent); padding:25px 20px 20px 20px; display:flex; gap:15px; align-items:center;">
+              <img src="${proyecto.logo}" style="width:65px; height:65px; object-fit:contain; border:1px solid #e2e8f0; border-radius:8px; padding:4px;" onerror="this.style.display='none'">
+              <div>
+                  <h3 style="margin:0 0 4px 0; font-size:1.25rem; font-weight:700;">${proyecto.nombre}</h3>
+                  ${proyecto.sector ? `<span style="font-size:0.75rem; color:#64748b;">${proyecto.sector}</span>` : ''}
+                  ${yearStr && yearStr !== 'NaN' ? `<span style="font-size:0.75rem; color:#00B159; font-weight:700; display:block; margin-top:4px;">Premiado en ${yearStr}</span>` : ''}
               </div>
-              <div style="padding:10px 15px; font-size:0.8rem; color:var(--dir-text-muted); line-height:1.4; max-height:80px; overflow-y:auto; background:white; border-bottom:1px solid var(--dir-border-light);">${proyecto.descripcion}</div>
-              ${htmlMiembros}
-          </article>
+          </div>
+          <div style="padding:0 20px 20px 20px; font-size:0.9rem; color:#475569; line-height:1.5; max-height:120px; overflow-y:auto; border-bottom:1px solid #e2e8f0;">${proyecto.descripcion}</div>
+          ${htmlMiembros}
+          ${proyecto.web ? `<div style="padding:15px 20px; text-align:right; background:#fff;"><a href="${proyecto.web}" target="_blank" style="font-size:0.85rem; font-weight:600; color:#00B159; text-decoration:none;">Visitar web corporativa ↗</a></div>` : ''}
       `;
   }
 
