@@ -14,65 +14,120 @@
             --dir-text-muted: #64748b;
             --dir-border-light: #e2e8f0;
         }
-        .directorio-contenedor { max-width: 1280px; margin: 40px auto; padding: 0 20px; font-family: system-ui, sans-serif; color: var(--dir-text-dark); }
-        .panel-controles { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light); }
-        .panel-controles input, .panel-controles select { padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; flex: 1; min-width: 200px; outline: none; box-sizing: border-box; }
-        .panel-controles input:focus, .panel-controles select:focus { border-color: var(--dir-primary); }
-        .section-title { font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light); font-weight: bold; }
-        .grid-entidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
+
+        .directorio-contenedor {
+            max-width: 1280px; margin: 40px auto; padding: 0 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--dir-text-dark);
+        }
+
+        .panel-controles {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px;
+            display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light);
+        }
+        .panel-controles input, .panel-controles select {
+            padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 15px; flex: 1; min-width: 200px; outline: none;
+            box-sizing: border-box;
+        }
+        .panel-controles input:focus, .panel-controles select:focus {
+            border-color: var(--dir-primary);
+        }
+
+        .section-title {
+            font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0;
+            padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light);
+            font-weight: bold;
+        }
+
+        .grid-entidades {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px;
+        }
+
+        .card-entidad {
+            background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-entidad:hover {
+            transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
         
-        .card-entidad { background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-        .card-entidad:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .card-header { padding: 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 15px; align-items: center; position: relative; }
+        .card-header {
+            padding: 25px 20px; border-bottom: 1px solid var(--dir-border-light);
+            display: flex; gap: 20px; align-items: center; position: relative;
+        }
         .card-header.is-socia { border-top: 4px solid var(--dir-primary); }
         .card-header.is-fisica { border-top: 4px solid #94a3b8; }
 
-        .entidad-logo { width: 90px; height: 90px; border-radius: 8px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 5px; flex-shrink: 0; }
-        .entidad-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--dir-border-light); flex-shrink: 0; }
+        /* Logos con mayor presencia visual */
+        .entidad-logo {
+            width: 90px; height: 90px; border-radius: 8px; object-fit: contain;
+            background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0;
+        }
+        .entidad-avatar {
+            width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--dir-border-light); flex-shrink: 0;
+        }
         .entidad-info { flex-grow: 1; }
         .entidad-nombre { margin: 0 0 4px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
-        .entidad-sector { font-size: 0.75rem; background: transparent; padding: 2px 6px; border-radius: 4px; display: inline-block; color: var(--dir-text-muted); font-weight: 500; border: 1px solid var(--dir-border-light); margin-top: 4px;}
         
+        /* Sector suavizado y con menor presencia */
+        .entidad-sector {
+            font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500;
+            display: inline-block; margin-top: 2px;
+        }
+
         .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
-        .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light); }
+        .miembro-item {
+            display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px;
+            padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light);
+        }
         .miembro-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         
-        .miembro-foto { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white;}
+        /* Fotos de los socios más grandes */
+        .miembro-foto { 
+            width: 60px; height: 60px; border-radius: 50%; object-fit: cover; 
+            border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white;
+        }
         .miembro-datos { flex-grow: 1; }
         .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: var(--dir-text-dark);}
-        .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 5px 0; }
+        .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 6px 0; }
         
-        .roles-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px;}
+        .roles-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px;}
         .badge-rol { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: #475569; font-weight: 500;}
         .badge-alumni { background: #fef08a; color: #854d0e; }
         
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
 
-        .card-footer { padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end; }
+        .card-footer {
+            padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end;
+        }
         .btn-web { font-size: 0.85rem; font-weight: 600; color: var(--dir-primary); text-decoration: none; }
         .btn-web:hover { color: var(--dir-accent); }
+
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<!-- PEGA AQUÍ TU CABECERA (HEADER) EXACTA DE WORDPRESS -->
-
 <main class="directorio-contenedor">
     <div class="panel-controles">
-        <input type="text" id="buscador-texto" placeholder="Buscar por nombre, empresa, cargo o rol...">
+        <input type="text" id="buscador-texto" placeholder="Buscar socio, empresa, cargo o comisión...">
         <select id="filtro-sector"><option value="todos">Sectores: Todos</option></select>
-        <select id="filtro-rol"><option value="todos">Roles: Todos</option></select>
+        <select id="filtro-rol"><option value="todos">Roles internos: Todos</option></select>
     </div>
+    
     <div id="loading" class="estado-carga">Cargando Red de Socios...</div>
+
     <div id="contenido-directorio" class="hidden">
+        <h2 class="section-title">Red de Socios (Mentores)</h2>
         <div id="grid-socios" class="grid-entidades"></div>
     </div>
 </main>
-
-<!-- PEGA AQUÍ TU PRE-FOOTER, FOOTER Y MENÚ MÓVIL EXACTOS DE WORDPRESS -->
 
 <script>
   let entidadesSocios = [];
@@ -81,22 +136,24 @@
   const selectRol = document.getElementById('filtro-rol');
   const contenedorSocios = document.getElementById('grid-socios');
 
-  // El motor de descifrado OData para evitar fallos con los arrays de SharePoint
+  // Normalizador defensivo para arrays complejos y objetos OData de SharePoint
   const extraerArray = (raw) => {
       if (!raw) return [];
+      if (typeof raw === 'object' && !Array.isArray(raw) && raw.Value) return [raw.Value];
       const arr = Array.isArray(raw) ? raw : [raw];
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
   async function cargarDatos() {
     try {
-      const respuesta = await fetch('/directorio.json');
+      const respuesta = await fetch('./directorio.json');
       if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
       procesarDatos(await respuesta.json());
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
-      document.getElementById('loading').innerHTML = `<p style="color:red;">Error conectando con la base de datos central.</p>`;
+      console.error(error);
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar los datos de los socios.</p>`;
     }
   }
 
@@ -108,22 +165,25 @@
       const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
       const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
 
-      // Detectar Alumni
+      // Cruce dinámico en memoria para marcas Alumni
       rawPersonasSocias.forEach(socio => {
-          socio.isAlumni = rawPersonasEmprendedoras.some(emprendedor => 
-              (emprendedor.nombre || '').toLowerCase().trim() === (socio.nombre || '').toLowerCase().trim() &&
-              (emprendedor.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
+          socio.isAlumni = rawPersonasEmprendedoras.some(emp => 
+              (emp.nombre || '').toLowerCase().trim() === (socio.nombre || '').toLowerCase().trim() &&
+              (emp.empresaVinculada || '').toLowerCase().trim() === (socio.empresaVinculada || '').toLowerCase().trim()
           );
       });
 
-      // Población de empresas socias
+      // Agrupar empresas con normalización estricta de tipos en IDs
       entidadesSocios = rawEmpresasSocias.map(emp => {
           if(emp.sector) dbSectores.add(emp.sector.trim());
           const miembros = rawPersonasSocias.filter(p => (p.empresaVinculada || '').toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
-          miembros.forEach(m => { extraerArray(m.roles).forEach(r => dbRoles.add(r.trim())); });
           
+          miembros.forEach(m => {
+              extraerArray(m.roles).forEach(r => dbRoles.add(r.trim()));
+          });
+
           return {
-              id_entidad: 'soc_emp_' + emp.id,
+              id_entidad: 'soc_emp_' + emp.id.toString(),
               is_empresa: true,
               nombre: emp.nombre,
               sector: emp.sector,
@@ -133,19 +193,19 @@
           };
       });
 
-      // Personas Físicas (Socios sin empresa mapeada) - Fichas limpias
-      const personasAsignadas = entidadesSocios.flatMap(e => e.miembros.map(m => m.id));
-      const personasFisicas = rawPersonasSocias.filter(p => !personasAsignadas.includes(p.id));
+      // Integrar personas físicas de forma limpia
+      const personasAsignadas = entidadesSocios.flatMap(e => e.miembros.map(m => m.id.toString()));
+      const personasFisicas = rawPersonasSocias.filter(p => !personasAsignadas.includes(p.id.toString()));
       
       personasFisicas.forEach(pf => {
           extraerArray(pf.roles).forEach(r => dbRoles.add(r.trim()));
           entidadesSocios.push({
-              id_entidad: 'soc_fis_' + pf.id,
+              id_entidad: 'soc_fis_' + pf.id.toString(),
               is_empresa: false,
               nombre: pf.nombre,
               sector: '', 
               foto: pf.foto,
-              web: '', // Matamos el footer duplicado
+              web: '', 
               miembros: [pf]
           });
       });
@@ -183,7 +243,7 @@
   function pintarGrid(datos) {
       contenedorSocios.innerHTML = '';
       if (datos.length === 0) {
-          contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay socios que coincidan con estos filtros.</p>';
+          contenedorSocios.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay socios registrados bajo estos filtros.</p>';
           return;
       }
 
@@ -207,11 +267,9 @@
               extraerArray(m.roles).forEach(r => badgesHTML += `<span class="badge-rol">${r}</span>`);
 
               const mentorizados = extraerArray(m.proyectosMentorizados);
-              const mentorizaHTML = mentorizados.length > 0 ? `<div class="mt-1 text-xs" style="color:#002b5c; font-weight:500; margin-top:4px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
+              const mentorizaHTML = mentorizados.length > 0 ? `<div style="font-size:0.75rem; color:#002b5c; font-weight:500; margin-top:6px;"><strong>Mentoriza a:</strong> ${mentorizados.join(', ')}</div>` : '';
 
               const htmlFotoPersona = (entidad.is_empresa && m.foto) ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://via.placeholder.com/60/e2e8f0/64748b?text=👤'">` : '';
-              
-              // Evitamos pintar "Miembro" por defecto en personas físicas vacías
               const htmlCargo = m.cargo ? `<p class="miembro-cargo">${m.cargo}</p>` : '';
 
               htmlMiembros += `
