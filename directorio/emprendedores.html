@@ -4,67 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyectos Premiados - Netmentora Madrid</title>
-    <!-- Copia aquí la misma etiqueta <style> EXACTA que te he puesto en el socios.html -->
     <style>
-        :root { --dir-primary: #002b5c; --dir-accent: #00B159; --dir-bg-main: transparent; --dir-bg-card: #ffffff; --dir-text-dark: #1e293b; --dir-text-muted: #64748b; --dir-border-light: #e2e8f0; }
-        .directorio-contenedor { max-width: 1280px; margin: 40px auto; padding: 0 20px; font-family: system-ui, sans-serif; color: var(--dir-text-dark); }
-        .panel-controles { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light); }
-        .panel-controles input, .panel-controles select { padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; flex: 1; min-width: 200px; outline: none; box-sizing: border-box; }
-        .panel-controles input:focus, .panel-controles select:focus { border-color: var(--dir-primary); }
-        .section-title { font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0; padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light); font-weight: bold; }
-        .grid-entidades { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px; }
-        
-        .card-entidad { background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
-        .card-entidad:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .card-header { padding: 20px; border-bottom: 1px solid var(--dir-border-light); display: flex; gap: 15px; align-items: center; position: relative; }
-        .card-header.is-premiada { border-top: 4px solid var(--dir-accent); }
+        :root {
+            --dir-primary: #002b5c; 
+            --dir-accent: #00B159; 
+            --dir-bg-main: transparent;
+            --dir-bg-card: #ffffff;
+            --dir-text-dark: #1e293b;
+            --dir-text-muted: #64748b;
+            --dir-border-light: #e2e8f0;
+        }
 
-        .entidad-logo { width: 90px; height: 90px; border-radius: 8px; object-fit: contain; background: white; border: 1px solid var(--dir-border-light); padding: 5px; flex-shrink: 0; }
+        .directorio-contenedor {
+            max-width: 1280px; margin: 40px auto; padding: 0 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: var(--dir-text-dark);
+        }
+
+        .panel-controles {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 30px;
+            display: flex; gap: 15px; flex-wrap: wrap; border: 1px solid var(--dir-border-light);
+        }
+        .panel-controles input, .panel-controles select {
+            padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px;
+            font-size: 15px; flex: 1; min-width: 200px; outline: none;
+            box-sizing: border-box;
+        }
+        .panel-controles input:focus, .panel-controles select:focus {
+            border-color: var(--dir-accent);
+        }
+
+        .section-title {
+            font-size: 1.8rem; color: var(--dir-primary); margin: 40px 0 20px 0;
+            padding-bottom: 10px; border-bottom: 2px solid var(--dir-border-light);
+            font-weight: bold;
+        }
+
+        .grid-entidades {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 25px;
+        }
+
+        .card-entidad {
+            background: var(--dir-bg-card); border-radius: 12px; border: 1px solid var(--dir-border-light);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-entidad:hover {
+            transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 25px 20px; border-bottom: 1px solid var(--dir-border-light);
+            display: flex; flex-direction: column; items: flex-start; gap: 10px; position: relative;
+            border-top: 4px solid var(--dir-accent);
+        }
+
+        .header-main-info { display: flex; gap: 20px; align-items: center; width: 100%; }
+
+        /* Presencia contundente del logotipo del proyecto */
+        .entidad-logo {
+            width: 90px; height: 90px; border-radius: 8px; object-fit: contain;
+            background: white; border: 1px solid var(--dir-border-light); padding: 6px; flex-shrink: 0;
+        }
         .entidad-info { flex-grow: 1; }
-        .entidad-nombre { margin: 0 0 4px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
-        .entidad-sector { font-size: 0.75rem; background: transparent; padding: 2px 6px; border-radius: 4px; display: inline-block; color: var(--dir-text-muted); font-weight: 500; border: 1px solid var(--dir-border-light); margin-top: 4px;}
-        .entidad-fecha { font-size: 0.75rem; color: #00B159; font-weight: bold; display: block; margin-bottom: 4px;}
-        .entidad-descripcion { font-size: 0.85rem; color: var(--dir-text-muted); margin-top: 8px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .entidad-nombre { margin: 0 0 2px 0; font-size: 1.3rem; line-height: 1.2; font-weight: bold; }
+        
+        /* Sector suavizado */
+        .entidad-sector {
+            font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500;
+            display: inline-block;
+        }
+        .entidad-fecha { font-size: 0.75rem; color: var(--dir-accent); font-weight: bold; display: block; margin-bottom: 2px;}
+        .entidad-descripcion { font-size: 0.85rem; color: var(--dir-text-muted); margin: 5px 0 0 0; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
         .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
-        .miembro-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light); }
+        .miembro-item {
+            display: flex; align-items: flex-start; gap: 15px; margin-bottom: 15px;
+            padding-bottom: 15px; border-bottom: 1px solid var(--dir-border-light);
+        }
         .miembro-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
         
+        /* Fotos más grandes de los emprendedores */
         .miembro-foto { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 1px solid var(--dir-border-light); flex-shrink: 0; background: white;}
         .miembro-datos { flex-grow: 1; }
         .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: var(--dir-text-dark);}
         .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 5px 0; }
-        
-        .roles-container { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 5px;}
-        .badge-rol { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: #475569; font-weight: 500;}
+
+        .mentores-wrapper {
+            margin-bottom: 15px; font-size: 0.8rem; background: #e0f2fe; padding: 8px 12px;
+            border-radius: 8px; color: #0369a1; font-weight: 500; border: 1px solid #bae6fd;
+        }
         
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
 
-        .card-footer { padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end; }
+        .card-footer {
+            padding: 15px 20px; border-top: 1px solid var(--dir-border-light); background: white; display: flex; justify-content: flex-end;
+        }
         .btn-web { font-size: 0.85rem; font-weight: 600; color: var(--dir-accent); text-decoration: none; }
         .btn-web:hover { color: var(--dir-primary); }
+
         .hidden { display: none !important; }
         .estado-carga { text-align: center; padding: 50px; color: var(--dir-text-muted); font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-<!-- PEGA AQUÍ TU CABECERA (HEADER) EXACTA DE WORDPRESS -->
-
 <main class="directorio-contenedor">
     <div class="panel-controles">
         <input type="text" id="buscador-texto" placeholder="Buscar proyecto, emprendedor o descripción...">
         <select id="filtro-sector"><option value="todos">Sectores: Todos</option></select>
-        <select id="filtro-anio"><option value="todos">Año: Todos</option></select>
+        <select id="filtro-anio"><option value="todos">Año del comité: Todos</option></select>
     </div>
-    <div id="loading" class="estado-carga">Cargando Proyectos Premiados...</div>
+    
+    <div id="loading" class="estado-carga">Cargando Empresas Premiadas...</div>
+
     <div id="contenido-directorio" class="hidden">
+        <h2 class="section-title">Proyectos / Empresas Premiadas</h2>
         <div id="grid-emprendedores" class="grid-entidades"></div>
     </div>
 </main>
-
-<!-- PEGA AQUÍ TU PRE-FOOTER, FOOTER Y MENÚ MÓVIL EXACTOS DE WORDPRESS -->
 
 <script>
   let entidadesEmprendedores = [];
@@ -75,19 +135,21 @@
 
   const extraerArray = (raw) => {
       if (!raw) return [];
+      if (typeof raw === 'object' && !Array.isArray(raw) && raw.Value) return [raw.Value];
       const arr = Array.isArray(raw) ? raw : [raw];
       return arr.map(item => (typeof item === 'object' && item !== null && item.Value) ? item.Value : item).filter(Boolean);
   };
 
   async function cargarDatos() {
     try {
-      const respuesta = await fetch('/directorio.json');
-      if (!respuesta.ok) throw new Error("Base de datos no encontrada.");
+      const respuesta = await fetch('./directorio.json');
+      if (!response.ok) throw new Error("Base de datos no encontrada.");
       procesarDatos(await respuesta.json());
       document.getElementById('loading').classList.add('hidden');
       document.getElementById('contenido-directorio').classList.remove('hidden');
     } catch (error) {
-      document.getElementById('loading').innerHTML = `<p style="color:red;">Error conectando con la base de datos central.</p>`;
+      console.error(error);
+      document.getElementById('loading').innerHTML = `<p style="color:red; text-align:center;">Error al cargar el histórico de proyectos.</p>`;
     }
   }
 
@@ -97,35 +159,40 @@
 
       const rawEmpresasPremiadas = data.filter(d => d.tipo === 'empresa_premiada');
       const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
+      const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
 
       entidadesEmprendedores = rawEmpresasPremiadas.map(emp => {
           if(emp.sector) dbSectores.add(emp.sector.trim());
           
-          let year = '';
+          let anio = '';
           if (emp.fechaComite) {
-              // Parseo seguro de fecha ISO o texto
               const dateObj = new Date(emp.fechaComite);
-              year = isNaN(dateObj.getFullYear()) ? emp.fechaComite.substring(0,4) : dateObj.getFullYear().toString();
-              if (year && year !== 'NaN') dbAnios.add(year);
+              anio = isNaN(dateObj.getFullYear()) ? emp.fechaComite.toString().substring(0,4) : dateObj.getFullYear().toString();
+              if (anio && anio !== 'NaN') dbAnios.add(anio);
           }
 
+          // RECONCILIACIÓN EN CALIENTE: Buscar mentores asignados escaneando los proyectosMentorizados de la red de socios
+          const mentoresReconciliados = rawPersonasSocias.filter(socio => {
+              const proyectosSocio = extraerArray(socio.proyectosMentorizados);
+              return proyectosSocio.some(p => p.toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
+          }).map(m => m.nombre);
+
           return {
-              id_entidad: 'emp_prem_' + emp.id,
-              is_empresa: true,
+              id_entidad: 'emp_prem_' + emp.id.toString(),
               nombre: emp.nombre,
               sector: emp.sector,
               logo: emp.logo,
               web: emp.web,
               descripcion: emp.descripcion || '',
-              fechaComite: emp.fechaComite || '',
-              anioComite: year,
-              mentores: extraerArray(emp.mentores),
+              anioComite: anio,
+              mentores: mentoresReconciliados,
               miembros: rawPersonasEmprendedoras.filter(p => (p.empresaVinculada || '').toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim())
           };
       });
 
+      // Rellenar controles UI ordenados
       [...dbSectores].sort().forEach(s => selectSector.insertAdjacentHTML('beforeend', `<option value="${s}">${s}</option>`));
-      [...dbAnios].sort((a,b) => b - a).forEach(a => selectAnio.insertAdjacentHTML('beforeend', `<option value="${a}">${a}</option>`)); // Ordenados del más reciente al más antiguo
+      [...dbAnios].sort((a,b) => b - a).forEach(a => selectAnio.insertAdjacentHTML('beforeend', `<option value="${a}">${a}</option>`));
 
       renderizarInterfaces();
   }
@@ -141,9 +208,7 @@
 
           if (texto !== '') {
               let stringBusqueda = `${entidad.nombre} ${entidad.sector || ''} ${entidad.descripcion || ''}`.toLowerCase();
-              entidad.miembros.forEach(m => {
-                  stringBusqueda += ` ${m.nombre} ${m.cargo || ''}`;
-              });
+              entidad.miembros.forEach(m => { stringBusqueda += ` ${m.nombre} ${m.cargo || ''}`; });
               if (!stringBusqueda.includes(texto)) return false;
           }
           return true;
@@ -155,7 +220,7 @@
   function pintarGrid(datos) {
       contenedorEmprendedores.innerHTML = '';
       if (datos.length === 0) {
-          contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay proyectos que coincidan con estos filtros.</p>';
+          contenedorEmprendedores.innerHTML = '<p class="estado-carga" style="grid-column: 1/-1;">No hay proyectos que coincidan con la búsqueda.</p>';
           return;
       }
 
@@ -167,14 +232,14 @@
           
           const imagenHtml = `<img src="${entidad.logo}" class="entidad-logo" onerror="this.style.display='none'">`;
           const sectorHtml = entidad.sector ? `<span class="entidad-sector">${entidad.sector}</span>` : '';
-          const fechaHtml = entidad.anioComite ? `<span class="entidad-fecha">Comité de Aceptación: ${entidad.anioComite}</span>` : '';
+          const fechaHtml = entidad.anioComite ? `<span class="entidad-fecha">Año de aceptación: ${entidad.anioComite}</span>` : '';
           const descripcionHtml = entidad.descripcion ? `<p class="entidad-descripcion" title="${entidad.descripcion}">${entidad.descripcion}</p>` : '';
           
           let htmlMiembros = '<div class="miembros-list">';
           
-          // Mostrar mentores asignados al proyecto si los hay
+          // Renderizado de mentores reconciliados en caliente
           if(entidad.mentores.length > 0) {
-             htmlMiembros += `<div style="margin-bottom: 12px; font-size: 0.8rem; background:#e2e8f0; padding:6px 10px; border-radius:6px; color:#1e293b;"><strong>Mentores asignados:</strong> ${entidad.mentores.join(', ')}</div>`;
+             htmlMiembros += `<div class="mentores-wrapper"><strong>Mentores de red asignados:</strong> ${entidad.mentores.join(', ')}</div>`;
           }
 
           entidad.miembros.forEach(m => {
@@ -197,14 +262,16 @@
           const footerHTML = entidad.web ? `<div class="card-footer"><a href="${entidad.web}" target="_blank" class="btn-web">Visitar web del proyecto ↗</a></div>` : '';
 
           card.innerHTML = `
-              <div class="card-header is-premiada">
-                  ${imagenHtml}
-                  <div class="entidad-info">
-                      ${fechaHtml}
-                      <h3 class="entidad-nombre">${entidad.nombre}</h3>
-                      ${sectorHtml}
-                      ${descripcionHtml}
+              <div class="card-header">
+                  <div class="header-main-info">
+                      ${imagenHtml}
+                      <div class="entidad-info">
+                          ${fechaHtml}
+                          <h3 class="entidad-nombre">${entidad.nombre}</h3>
+                          ${sectorHtml}
+                      </div>
                   </div>
+                  ${descripcionHtml}
               </div>
               ${htmlMiembros}
               ${footerHTML}
