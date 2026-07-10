@@ -71,10 +71,14 @@
         
         .entidad-sector {
             font-size: 0.75rem; color: var(--dir-text-muted); font-weight: 500;
-            display: inline-block;
+            display: block; margin-bottom: 2px;
         }
-        .entidad-fecha { font-size: 0.75rem; color: var(--dir-accent); font-weight: bold; display: block; margin-bottom: 2px;}
-        .entidad-descripcion { font-size: 0.85rem; color: var(--dir-text-muted); margin: 5px 0 0 0; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .entidad-fecha { font-size: 0.75rem; color: var(--dir-accent); font-weight: bold; display: block;}
+        
+        /* Modificado para que no se trunque jamás el texto */
+        .entidad-descripcion { 
+            font-size: 0.85rem; color: var(--dir-text-muted); margin: 5px 0 0 0; line-height: 1.45; 
+        }
 
         .miembros-list { padding: 15px 20px; flex-grow: 1; background: #fafafa; }
         .miembro-item {
@@ -87,11 +91,6 @@
         .miembro-datos { flex-grow: 1; }
         .miembro-nombre { font-size: 1.05rem; font-weight: 600; margin: 0 0 2px 0; color: var(--dir-text-dark);}
         .miembro-cargo { font-size: 0.85rem; color: var(--dir-text-muted); margin: 0 0 5px 0; }
-
-        .mentores-wrapper {
-            margin-bottom: 15px; font-size: 0.8rem; background: #e0f2fe; padding: 8px 12px;
-            border-radius: 8px; color: #0369a1; font-weight: 500; border: 1px solid #bae6fd;
-        }
         
         .linkedin-link { font-size: 0.8rem; color: #0a66c2; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
         .linkedin-link:hover { text-decoration: underline; }
@@ -270,6 +269,7 @@
       const rawEmpresasPremiadas = data.filter(d => d.tipo === 'empresa_premiada');
       const rawPersonasEmprendedoras = data.filter(d => d.tipo === 'emprendedor');
       const rawPersonasSocias = data.filter(d => d.tipo === 'socio');
+      const rawEmpresasSocias = data.filter(d => d.tipo === 'empresa_socia');
 
       entidadesEmprendedores = rawEmpresasPremiadas.map(emp => {
           if(emp.sector) dbSectores.add(emp.sector.trim());
@@ -281,11 +281,19 @@
               if (anio && anio !== 'NaN') dbAnios.add(anio);
           }
 
-          // RECONCILIACIÓN EN CALIENTE: Buscar mentores asignados
+          // RECONCILIACIÓN EN CALIENTE MEJORADA: Buscar mentores con foto, empresa y logo
           const mentoresReconciliados = rawPersonasSocias.filter(socio => {
               const proyectosSocio = extraerArray(socio.proyectosMentorizados);
               return proyectosSocio.some(p => p.toLowerCase().trim() === (emp.nombre || '').toLowerCase().trim());
-          }).map(m => m.nombre);
+          }).map(m => {
+              const mentorEmp = rawEmpresasSocias.find(e => (e.nombre||'').toLowerCase().trim() === (m.empresaVinculada||'').toLowerCase().trim());
+              return {
+                  nombre: m.nombre,
+                  foto: m.foto,
+                  empresa: m.empresaVinculada,
+                  logo: mentorEmp ? mentorEmp.logo : null
+              };
+          });
 
           return {
               id_entidad: 'emp_prem_' + emp.id.toString(),
@@ -341,17 +349,44 @@
           
           const imagenHtml = `<img src="${entidad.logo}" class="entidad-logo" onerror="this.style.display='none'">`;
           const sectorHtml = entidad.sector ? `<span class="entidad-sector">${entidad.sector}</span>` : '';
-          const fechaHtml = entidad.anioComite ? `<span class="entidad-fecha">Año de aceptación: ${entidad.anioComite}</span>` : '';
-          const descripcionHtml = entidad.descripcion ? `<p class="entidad-descripcion" title="${entidad.descripcion}">${entidad.descripcion}</p>` : '';
+          const fechaHtml = entidad.anioComite ? `<span class="entidad-fecha">Premiado en ${entidad.anioComite}</span>` : '';
+          const descripcionHtml = entidad.descripcion ? `<p class="entidad-descripcion">${entidad.descripcion}</p>` : '';
           
           let htmlMiembros = '<div class="miembros-list">';
           
+          // Nuevo renderizado VIP de Mentores
           if(entidad.mentores.length > 0) {
-             htmlMiembros += `<div class="mentores-wrapper"><strong>Mentores de red asignados:</strong> ${entidad.mentores.join(', ')}</div>`;
+             const labelText = entidad.mentores.length === 1 ? 'Mentor:' : 'Mentores:';
+             let listaMentores = '';
+             
+             entidad.mentores.forEach(mentor => {
+                 const mFoto = mentor.foto 
+                    ? `<img src="${mentor.foto}" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
+                    : `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:1px solid #cbd5e1; flex-shrink:0;">`;
+                 const mEmpresa = mentor.empresa ? ` <span style="color:#64748b; font-weight:400;">(${mentor.empresa})</span>` : '';
+                 const mLogo = mentor.logo ? `<img src="${mentor.logo}" style="height:20px; max-width:50px; object-fit:contain; margin-left:8px;" onerror="this.style.display='none'">` : '';
+                 
+                 listaMentores += `
+                     <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                         ${mFoto}
+                         <span style="font-size:0.85rem; color:#0f172a; font-weight:600;">${mentor.nombre}${mEmpresa}</span>
+                         ${mLogo}
+                     </div>
+                 `;
+             });
+             
+             htmlMiembros += `
+                 <div class="mentores-wrapper" style="margin-bottom: 15px; background: #f1f5f9; padding: 12px 15px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                     <div style="color: #0f172a; font-weight: bold; font-size: 0.8rem; text-transform:uppercase; letter-spacing:0.5px;">${labelText}</div>
+                     ${listaMentores}
+                 </div>
+             `;
           }
 
           entidad.miembros.forEach(m => {
-              const htmlFotoPersona = m.foto ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://via.placeholder.com/60/e2e8f0/64748b?text=👤'">` : '';
+              const htmlFotoPersona = m.foto 
+                  ? `<img src="${m.foto}" class="miembro-foto" onerror="this.src='https://netmentoramadrid.vercel.app/fotos/desconocido.webp'">` 
+                  : `<img src="https://netmentoramadrid.vercel.app/fotos/desconocido.webp" class="miembro-foto">`;
               const htmlCargo = m.cargo ? `<p class="miembro-cargo">${m.cargo}</p>` : '';
 
               htmlMiembros += `
@@ -374,9 +409,9 @@
                   <div class="header-main-info">
                       ${imagenHtml}
                       <div class="entidad-info">
-                          ${fechaHtml}
                           <h3 class="entidad-nombre">${entidad.nombre}</h3>
                           ${sectorHtml}
+                          ${fechaHtml}
                       </div>
                   </div>
                   ${descripcionHtml}
